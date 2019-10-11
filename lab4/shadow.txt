@@ -1,0 +1,40 @@
+george:$5$ab$X6moXMBmKxEkH6XrCqHvFXTB.5WeyWWTVFqahh.BFRD
+maria:$5$ab$xhzLWNRyZfrtjyG6HBQ48t3KCK2j4qsqDRQMNGVn6A9
+alice:$5$ab$Uy4WKL6KBnQ.xNa5b7ZCbpKX2DPVRsKUa.ssXclDUfA
+bob:$5$ab$ay/R9ygZUsjXmksQvlpMzbdtYBjOUvlEVCj9IaM.cnB
+despickler:$5$ab$S0uPEMdp1nHs/MmB1XVeM1jqyEnhs4z9BZe.08jFlA7
+richard:$5$ab$rHFkI2ust2fsZNNEkYk2ImkYbTmovoMvdjlA9ozPdX4
+rmshifler:$5$ab$DhS5P8WyMpT9FTovr8UrllCCGAOJHAVH0549zC9TVv.
+yxjing:$5$ab$Te3DSDggFW3Ds0/Hq9SxxBQITs/opgC8.xuAl1fzxo9
+jtanderson:$5$ab$QmqcXXxcIt2UTSMrmw9cgz7eHpE4249XesQyoQePW79
+bfpierce:$5$ab$is9fvJL/y3aTsrTiNWu0biOZpa2xoFqfsstktXGM3V3
+rmstallman:$5$ab$eLAaVmRnryQpC5JcvxLyJxM7oXYcODXUa4KM10dw/s9
+
+import re
+import os
+import itertools
+my_dict=dict()
+my_dict['A']=['a', '@', '4']
+my_dict['a']=['a', '@', '4']
+my_dict['B']=['B', '8']
+my_dict['E']=['E', '3']
+my_dict['e']=['e', '3']
+my_dict['I']=['I', '1']
+my_dict['i']=['i', '1']
+my_dict['L']=['L', '1']
+my_dict['l']=['l', '1']
+my_dict['O']=['o', '0']
+my_dict['o']=['o', '0']
+my_dict['S']=['S', '5']
+my_dict['s']=['s', '5']
+my_dict['T']=['T', '7']
+my_dict['t']=['t', '7']
+
+inputFile = open('testwords', 'r')
+outputFile = open('outputwords', 'a+')
+words = inputFile.readlines()
+for word in words:
+    keys = re.findall(r'\{([^}]+)\}', word)
+    for values in itertools.product(*[my_dict[key] for key in keys]):
+        output = word.format(**dict(zip(keys, values)))
+        outputFile.write(output)
