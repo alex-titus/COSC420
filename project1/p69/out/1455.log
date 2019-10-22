@@ -1,0 +1,64 @@
+Node 2 calculating 4168 to 6252
+Node 3 calculating 6252 to 8336
+Node 4 calculating 8336 to 10420
+Node 5 calculating 10420 to 12504
+Node 6 calculating 12504 to 14588
+Node 7 calculating 14588 to 16672
+Node 8 calculating 16672 to 18756
+Node 10 calculating 20840 to 22924
+Node 1 calculating 2084 to 4168
+Node 9 calculating 18756 to 20840
+Node 11 calculating 22924 to 25008
+Node 12 calculating 25008 to 27092
+Node 14 calculating 29176 to 31260
+Node 13 calculating 27092 to 29176
+Node 16 calculating 33344 to 35427
+Node 15 calculating 31260 to 33344
+Node 17 calculating 35427 to 37510
+Node 18 calculating 37510 to 39593
+Node 19 calculating 39593 to 41676
+Node 20 calculating 41676 to 43759
+Node 22 calculating 45842 to 47925
+Node 23 calculating 47925 to 50008
+Node 24 calculating 50008 to 52091
+Node 25 calculating 52091 to 54174
+Node 27 calculating 56257 to 58340
+Node 29 calculating 60423 to 62506
+Node 30 calculating 62506 to 64589
+Node 31 calculating 64589 to 66672
+Node 32 calculating 66672 to 68755
+Node 26 calculating 54174 to 56257
+Node 33 calculating 68755 to 70838
+Node 34 calculating 70838 to 72921
+Node 28 calculating 58340 to 60423
+Node 35 calculating 72921 to 75004
+Node 36 calculating 75004 to 77087
+Node 37 calculating 77087 to 79170
+Node 38 calculating 79170 to 81253
+Node 39 calculating 81253 to 83336
+Node 41 calculating 85419 to 87502
+Node 0 calculating 0 to 2084
+Node 40 calculating 83336 to 85419
+Node 42 calculating 87502 to 89585
+Node 43 calculating 89585 to 91668
+Node 44 calculating 91668 to 93751
+Node 21 calculating 43759 to 45842
+Node 45 calculating 93751 to 95834
+Node 46 calculating 95834 to 97917
+Node 47 calculating 97917 to 100000
+Node 0 currentMax: inf and maxN: 1
+Node 1 currentMax: 4.812 and maxN: 2310
+Node 2 currentMax: 4.812 and maxN: 4620
+Node 3 currentMax: 4.812 and maxN: 6930
+Node 4 currentMax: 4.812 and maxN: 9240
+Node 6 currentMax: 4.812 and maxN: 13860
+Node 5 currentMax: 4.812 and maxN: 11550
+Node 7 currentMax: 4.812 and maxN: 16170
+Node 8 currentMax: 4.812 and maxN: 18480
+Node 9 currentMax: 4.812 and maxN: 20790
+Node 10 currentMax: 4.740 and maxN: 21840
+Node 11 currentMax: 4.812 and maxN: 23100
+Node 12 currentMax: 4.812 and maxN: 25410
+Node 13 currentMax: 4.812 and maxN: 27720
+Node 14 currentMax: 5.214 and maxN: 30030
+slurmstepd: error: *** JOB 1455 ON hpcl3-3 CANCELLED AT 2019-10-16T12:01:47 ***

@@ -2,7 +2,7 @@ import re
 import os
 import itertools
 my_dict=dict()
-my_dict['A']=['a', '@', '4']
+my_dict['A']=['A', '@', '4']
 my_dict['a']=['a', '@', '4']
 my_dict['B']=['B', '8']
 my_dict['E']=['E', '3']

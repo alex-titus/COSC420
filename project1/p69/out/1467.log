@@ -1,0 +1,222 @@
+Node 1 calculating 5556 to 11112
+Node 3 calculating 16668 to 22224
+Node 4 calculating 22224 to 27780
+Node 6 calculating 33336 to 38892
+Node 7 calculating 38892 to 44448
+Node 9 calculating 50004 to 55560
+Node 10 calculating 55560 to 61116
+Node 11 calculating 61116 to 66672
+Node 8 calculating 44448 to 50004
+Node 5 calculating 27780 to 33336
+Node 12 calculating 66672 to 72228
+Node 14 calculating 77784 to 83340
+Node 15 calculating 83340 to 88896
+Node 16 calculating 88896 to 94452
+Node 17 calculating 94452 to 100008
+Node 18 calculating 100008 to 105564
+Node 19 calculating 105564 to 111120
+Node 20 calculating 111120 to 116676
+Node 21 calculating 116676 to 122232
+Node 22 calculating 122232 to 127788
+Node 23 calculating 127788 to 133344
+Node 24 calculating 133344 to 138900
+Node 13 calculating 72228 to 77784
+Node 25 calculating 138900 to 144456
+Node 26 calculating 144456 to 150012
+Node 27 calculating 150012 to 155568
+Node 2 calculating 11112 to 16668
+Node 29 calculating 161124 to 166680
+Node 28 calculating 155568 to 161124
+Node 30 calculating 166680 to 172236
+Node 31 calculating 172236 to 177792
+Node 32 calculating 177792 to 183348
+Node 34 calculating 188904 to 194460
+Node 33 calculating 183348 to 188904
+Node 35 calculating 194460 to 200016
+Node 38 calculating 211128 to 216684
+Node 39 calculating 216684 to 222240
+Node 41 calculating 227796 to 233352
+Node 43 calculating 238908 to 244464
+Node 36 calculating 200016 to 205572
+Node 44 calculating 244464 to 250020
+Node 45 calculating 250020 to 255576
+Node 46 calculating 255576 to 261132
+Node 47 calculating 261132 to 266688
+Node 42 calculating 233352 to 238908
+Node 48 calculating 266688 to 272244
+Node 49 calculating 272244 to 277800
+Node 50 calculating 277800 to 283356
+Node 51 calculating 283356 to 288912
+Node 52 calculating 288912 to 294468
+Node 53 calculating 294468 to 300024
+Node 55 calculating 305580 to 311136
+Node 56 calculating 311136 to 316692
+Node 54 calculating 300024 to 305580
+Node 57 calculating 316692 to 322248
+Node 58 calculating 322248 to 327804
+Node 59 calculating 327804 to 333360
+Node 61 calculating 338916 to 344472
+Node 60 calculating 333360 to 338916
+Node 62 calculating 344472 to 350028
+Node 63 calculating 350028 to 355584
+Node 65 calculating 361140 to 366696
+Node 40 calculating 222240 to 227796
+Node 67 calculating 372252 to 377808
+Node 68 calculating 377808 to 383364
+Node 64 calculating 355584 to 361140
+Node 69 calculating 383364 to 388920
+Node 66 calculating 366696 to 372252
+Node 70 calculating 388920 to 394476
+Node 37 calculating 205572 to 211128
+Node 71 calculating 394476 to 400032
+Node 72 calculating 400032 to 405588
+Node 73 calculating 405588 to 411144
+Node 74 calculating 411144 to 416700
+Node 75 calculating 416700 to 422256
+Node 76 calculating 422256 to 427812
+Node 78 calculating 433368 to 438924
+Node 79 calculating 438924 to 444480
+Node 77 calculating 427812 to 433368
+Node 81 calculating 450036 to 455592
+Node 80 calculating 444480 to 450036
+Node 82 calculating 455592 to 461148
+Node 83 calculating 461148 to 466704
+Node 85 calculating 472260 to 477816
+Node 87 calculating 483372 to 488928
+Node 89 calculating 494484 to 500040
+Node 88 calculating 488928 to 494484
+Node 90 calculating 500040 to 505596
+Node 84 calculating 466704 to 472260
+Node 86 calculating 477816 to 483372
+Node 91 calculating 505596 to 511152
+Node 92 calculating 511152 to 516708
+Node 93 calculating 516708 to 522264
+Node 95 calculating 527820 to 533376
+Node 96 calculating 533376 to 538932
+Node 97 calculating 538932 to 544488
+Node 98 calculating 544488 to 550044
+Node 100 calculating 555600 to 561155
+Node 101 calculating 561155 to 566710
+Node 102 calculating 566710 to 572265
+Node 103 calculating 572265 to 577820
+Node 104 calculating 577820 to 583375
+Node 105 calculating 583375 to 588930
+Node 106 calculating 588930 to 594485
+Node 108 calculating 600040 to 605595
+Node 107 calculating 594485 to 600040
+Node 109 calculating 605595 to 611150
+Node 110 calculating 611150 to 616705
+Node 99 calculating 550044 to 555600
+Node 111 calculating 616705 to 622260
+Node 113 calculating 627815 to 633370
+Node 112 calculating 622260 to 627815
+Node 114 calculating 633370 to 638925
+Node 94 calculating 522264 to 527820
+Node 115 calculating 638925 to 644480
+Node 116 calculating 644480 to 650035
+Node 117 calculating 650035 to 655590
+Node 118 calculating 655590 to 661145
+Node 119 calculating 661145 to 666700
+Node 120 calculating 666700 to 672255
+Node 121 calculating 672255 to 677810
+Node 122 calculating 677810 to 683365
+Node 123 calculating 683365 to 688920
+Node 124 calculating 688920 to 694475
+Node 125 calculating 694475 to 700030
+Node 126 calculating 700030 to 705585
+Node 127 calculating 705585 to 711140
+Node 128 calculating 711140 to 716695
+Node 129 calculating 716695 to 722250
+Node 130 calculating 722250 to 727805
+Node 131 calculating 727805 to 733360
+Node 132 calculating 733360 to 738915
+Node 133 calculating 738915 to 744470
+Node 134 calculating 744470 to 750025
+Node 135 calculating 750025 to 755580
+Node 136 calculating 755580 to 761135
+Node 137 calculating 761135 to 766690
+Node 138 calculating 766690 to 772245
+Node 140 calculating 777800 to 783355
+Node 141 calculating 783355 to 788910
+Node 142 calculating 788910 to 794465
+Node 143 calculating 794465 to 800020
+Node 145 calculating 805575 to 811130
+Node 146 calculating 811130 to 816685
+Node 144 calculating 800020 to 805575
+Node 147 calculating 816685 to 822240
+Node 148 calculating 822240 to 827795
+Node 149 calculating 827795 to 833350
+Node 150 calculating 833350 to 838905
+Node 151 calculating 838905 to 844460
+Node 153 calculating 850015 to 855570
+Node 154 calculating 855570 to 861125
+Node 155 calculating 861125 to 866680
+Node 156 calculating 866680 to 872235
+Node 157 calculating 872235 to 877790
+Node 152 calculating 844460 to 850015
+Node 158 calculating 877790 to 883345
+Node 159 calculating 883345 to 888900
+Node 160 calculating 888900 to 894455
+Node 161 calculating 894455 to 900010
+Node 162 calculating 900010 to 905565
+Node 163 calculating 905565 to 911120
+Node 164 calculating 911120 to 916675
+Node 165 calculating 916675 to 922230
+Node 166 calculating 922230 to 927785
+Node 167 calculating 927785 to 933340
+Node 168 calculating 933340 to 938895
+Node 169 calculating 938895 to 944450
+Node 170 calculating 944450 to 950005
+Node 171 calculating 950005 to 955560
+Node 173 calculating 961115 to 966670
+Node 172 calculating 955560 to 961115
+Node 0 calculating 0 to 5556
+Node 174 calculating 966670 to 972225
+Node 176 calculating 977780 to 983335
+Node 175 calculating 972225 to 977780
+Node 177 calculating 983335 to 988890
+Node 139 calculating 772245 to 777800
+Node 178 calculating 988890 to 994445
+Node 179 calculating 994445 to 1000000
+Node 0 currentMax: inf and maxN: 1
+Node 1 currentMax: 4.812 and maxN: 9240
+Node 2 currentMax: 4.812 and maxN: 16170
+Node 3 currentMax: 4.812 and maxN: 20790
+Node 4 currentMax: 4.812 and maxN: 27720
+Node 5 currentMax: 5.214 and maxN: 30030
+Node 6 currentMax: 4.812 and maxN: 36960
+Node 7 currentMax: 5.113 and maxN: 39270
+Node 8 currentMax: 5.036 and maxN: 46410
+Node 9 currentMax: 5.031 and maxN: 53130
+Node 10 currentMax: 5.214 and maxN: 60060
+Node 11 currentMax: 4.955 and maxN: 62790
+Node 12 currentMax: 4.984 and maxN: 66990
+Node 13 currentMax: 4.812 and maxN: 76230
+Node 14 currentMax: 5.113 and maxN: 78540
+Node 15 currentMax: 5.080 and maxN: 87780
+Node 16 currentMax: 5.214 and maxN: 90090
+Node 17 currentMax: 4.933 and maxN: 94710
+Node 18 currentMax: 5.003 and maxN: 103740
+Node 19 currentMax: 5.031 and maxN: 106260
+Node 20 currentMax: 4.858 and maxN: 111930
+Node 21 currentMax: 5.214 and maxN: 120120
+Node 22 currentMax: 4.955 and maxN: 125580
+Node 23 currentMax: 5.080 and maxN: 131670
+Node 24 currentMax: 4.984 and maxN: 133980
+Node 25 currentMax: 5.036 and maxN: 139230
+Node 26 currentMax: 4.831 and maxN: 144690
+Node 27 currentMax: 5.214 and maxN: 150150
+Node 28 currentMax: 5.113 and maxN: 157080
+Node 29 currentMax: 4.881 and maxN: 164010
+Node 30 currentMax: 4.946 and maxN: 170940
+Node 31 currentMax: 5.080 and maxN: 175560
+Node 32 currentMax: 5.214 and maxN: 180180
+Node 33 currentMax: 5.036 and maxN: 185640
+Node 35 currentMax: 5.113 and maxN: 196350
+Node 34 currentMax: 4.933 and maxN: 189420
+Node 36 currentMax: 4.984 and maxN: 200970
+Node 37 currentMax: 5.214 and maxN: 210210
+Node 38 currentMax: 5.031 and maxN: 212520
+Node 39 currentMax: 5.080 and maxN: 219450
+Node 40 currentMax: 4.863 and maxN: 224070
+slurmstepd: error: *** JOB 1467 ON hpcl1-1 CANCELLED AT 2019-10-18T11:10:32 ***

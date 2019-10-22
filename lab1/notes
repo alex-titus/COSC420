@@ -1,0 +1,30 @@
+mpicc hello.c
+mpiexec ./a.out
+
+MUST CALL
+  int MPI_Init(int *argc, int ***argv)
+  int MPI_Finalize()
+
+MPI_COMM_WORLD is a predefined communicator
+MPI_Comm_size() - total size of the comm
+MPI_Comm_rank() - total rank of the comm
+  Both above take MPI_Comm and int*
+    result stores in the second param
+MPI_Get_processor_name(char *name, int *resultLen)
+  MPI_MAX_PROCESSOR_NAME
+int MPI_Allreduce(const void* sendbuf, void* recvbuf, int count,
+                  MPI_DataType datatype, MPI_Op op, MPI_Comm comm)
+    IN sendbuf: starting address of send buffer
+    OUT recvbuf: starting address of recieve buffer
+    IN count: number of elements in send buffer
+    IN datatype: datat type of elements of send buffer
+    IN op: operation across all data
+    IN comm: communication (handler)
+
+
+
+number = sqrt of whatev r number is passed in
+
+node 0 does 2 through (1/n)*number
+node 1 does (1/n)*number through (2/n)* number
+node n (n-1/n)*number through number

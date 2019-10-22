@@ -1,0 +1,201 @@
+### hello.c ###
+
+
+Compiled with make
+Executed with mpiexec -n 4 ./hello
+Cleaned with make clean
+
+#include <stdio.h>
+#include <mpi.h>
+
+int main(int argc, char **argv){
+  //MPI_Init(&argc, &argv);
+  MPI_Init(NULL, NULL);
+
+  int world_size;
+  MPI_Comm world = MPI_COMM_WORLD;
+  MPI_Comm_size(world, &world_size);
+
+  int me;
+  MPI_Comm_rank(world, &me);
+
+  char name[MPI_MAX_PROCESSOR_NAME];
+  int name_len;
+  MPI_Get_processor_name(name, &name_len);
+
+  printf("I am processor number %s\n", name);
+  printf("Hello, world of size %d\n", world_size);
+  printf("I am node %d\n", me);
+  MPI_Finalize();
+  return 0;
+}
+
+bash-4.2$ mpiexec -n 4 ./hello
+I am processor number hpcl4-6
+Hello, world of size 4
+I am node 3
+I am processor number hpcl4-6
+Hello, world of size 4
+I am node 0
+I am processor number hpcl4-6
+Hello, world of size 4
+I am node 2
+I am processor number hpcl4-6
+Hello, world of size 4
+I am node 1
+bash-4.2$
+
+
+### primes.c ###
+
+Compiled with make
+Executed with mpiexec -n 10 ./sqrt #
+  The # is the number you want to pass in
+Cleaned with make clean
+
+(a) What is the theoretical time complexity of your algorithms (best and worst case), in terms
+of the input size?
+  It seems to work in roughly the same time sense for any numbers given in, the largest part of the time being the communication between nodes slowing it down immensely.
+(b) According to the data, does adding more nodes perfectly divide the time taken by the program?
+  It does not, it seems that a vast majority of the time (roughly .6 seconds) is the time that communication takes, and this is almost 90% of the entire time for the problem to be run
+(c) Justify the fact that one needs only check up to √
+N in the brute force primality test.
+  Because every number after the square root is already a factor of a number between 2 and √n
+(d) How could the code be improved in terms of usability, efficiency, and robustness?
+  Faster communication from host machine to nodes would be the biggest time saver.
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <mpi.h>
+#include <math.h>
+
+int main(int argc, char **argv){
+  MPI_Init(&argc, &argv);
+
+  // Initializing values for
+  int me;
+  int world_size;
+  MPI_Comm world = MPI_COMM_WORLD;
+  MPI_Comm_rank(world, &me);
+  MPI_Comm_size(world, &world_size);
+  unsigned long int input_number = atoi(argv[1]);
+  unsigned long int num = sqrt(input_number)+1;
+
+  unsigned long int beginning_number;
+  unsigned long int final_number;
+  // Base case for node 0, we don't need to test below 2
+  if(me == 0){
+    beginning_number = 2;
+    final_number = (num/world_size);
+  } else if (me == world_size){
+    // Base case for node n, as we don't need to test above sqrt(final_number)
+    beginning_number = ((num*me)/world_size);
+    final_number = num;
+  } else {
+    // Standard case for node 1 through node n-1
+    beginning_number = ((me*num)/world_size);
+    final_number = ((me+1)*num)/world_size;
+  }
+
+  // Easiest way to check if given a small number to test, so you won't test 1
+  if(beginning_number == 1){
+    beginning_number = 2;
+  }
+  if(final_number == 1){
+    final_number = 2;
+  }
+  if(beginning_number == 0){
+    beginning_number = 2;
+  }
+  if(final_number == 0){
+    final_number = 2;
+  }
+
+  printf("Node %d is testing %lu-%lu\n", me, beginning_number, final_number);
+
+  // For loop each node will run that will iterate through it's numbers
+  unsigned long int i;
+  for(i = beginning_number; i <= final_number; i++){
+    if (input_number % i == 0){
+      printf("Node %d found %lu is divisible by %lu\n", me, input_number, i);
+    }
+  }
+  MPI_Finalize();
+  return 0;
+}
+
+bash-4.2$ make
+mpicc -lm -Wall \-o prime primes.c
+bash-4.2$ time mpiexec -n 10 ./prime 1000
+Node 0 is testing 2-3
+Node 0 found 1000 is divisible by 2
+Node 3 is testing 9-12
+Node 3 found 1000 is divisible by 10
+Node 7 is testing 22-25
+Node 7 found 1000 is divisible by 25
+Node 4 is testing 12-16
+Node 5 is testing 16-19
+Node 6 is testing 19-22
+Node 6 found 1000 is divisible by 20
+Node 8 is testing 25-28
+Node 8 found 1000 is divisible by 25
+Node 9 is testing 28-32
+Node 1 is testing 3-6
+Node 1 found 1000 is divisible by 4
+Node 1 found 1000 is divisible by 5
+Node 2 is testing 6-9
+Node 2 found 1000 is divisible by 8
+
+real    0m0.669s
+user    0m0.356s
+sys     0m0.394s
+bash-4.2$ time mpiexec -n 10 ./prime 10000
+Node 1 is testing 10-20
+Node 1 found 10000 is divisible by 10
+Node 1 found 10000 is divisible by 16
+Node 1 found 10000 is divisible by 20
+Node 2 is testing 20-30
+Node 2 found 10000 is divisible by 20
+Node 2 found 10000 is divisible by 25
+Node 3 is testing 30-40
+Node 3 found 10000 is divisible by 40
+Node 7 is testing 70-80
+Node 7 found 10000 is divisible by 80
+Node 8 is testing 80-90
+Node 8 found 10000 is divisible by 80
+Node 0 is testing 2-10
+Node 0 found 10000 is divisible by 2
+Node 0 found 10000 is divisible by 4
+Node 0 found 10000 is divisible by 5
+Node 0 found 10000 is divisible by 8
+Node 0 found 10000 is divisible by 10
+Node 4 is testing 40-50
+Node 4 found 10000 is divisible by 40
+Node 4 found 10000 is divisible by 50
+Node 5 is testing 50-60
+Node 5 found 10000 is divisible by 50
+Node 6 is testing 60-70
+Node 9 is testing 90-101
+Node 9 found 10000 is divisible by 100
+
+real    0m0.653s
+user    0m0.341s
+sys     0m0.398s
+bash-4.2$ time mpiexec -n 10 ./prime 1844674407
+Node 3 is testing 12885-17180
+Node 0 is testing 2-4295
+Node 0 found 1844674407 is divisible by 3
+Node 0 found 1844674407 is divisible by 9
+Node 4 is testing 17180-21475
+Node 6 is testing 25770-30065
+Node 2 is testing 8590-12885
+Node 7 is testing 30065-34360
+Node 1 is testing 4295-8590
+Node 5 is testing 21475-25770
+Node 8 is testing 34360-38655
+Node 9 is testing 38655-42950
+
+real    0m0.666s
+user    0m0.367s
+sys     0m0.392s
