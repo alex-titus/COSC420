@@ -1,14 +1,14 @@
-george:$5$ab$X6moXMBmKxEkH6XrCqHvFXTB.5WeyWWTVFqahh.BFRD
-maria:$5$ab$xhzLWNRyZfrtjyG6HBQ48t3KCK2j4qsqDRQMNGVn6A9
-alice:$5$ab$Uy4WKL6KBnQ.xNa5b7ZCbpKX2DPVRsKUa.ssXclDUfA
-bob:$5$ab$ay/R9ygZUsjXmksQvlpMzbdtYBjOUvlEVCj9IaM.cnB
-despickler:$5$ab$S0uPEMdp1nHs/MmB1XVeM1jqyEnhs4z9BZe.08jFlA7
-richard:$5$ab$rHFkI2ust2fsZNNEkYk2ImkYbTmovoMvdjlA9ozPdX4
-rmshifler:$5$ab$DhS5P8WyMpT9FTovr8UrllCCGAOJHAVH0549zC9TVv.
-yxjing:$5$ab$Te3DSDggFW3Ds0/Hq9SxxBQITs/opgC8.xuAl1fzxo9
-jtanderson:$5$ab$QmqcXXxcIt2UTSMrmw9cgz7eHpE4249XesQyoQePW79
-bfpierce:$5$ab$is9fvJL/y3aTsrTiNWu0biOZpa2xoFqfsstktXGM3V3
-rmstallman:$5$ab$eLAaVmRnryQpC5JcvxLyJxM7oXYcODXUa4KM10dw/s9
+george:$1$ab$tYl84YhDM6bmCOuCusTKS.
+maria:$1$ab$DC1ifnjzzu8Za5qEt96Kq0
+alice:$1$ab$DqPMoPPboZ2HTH7RfiqQs.
+bob:$1$ab$0I4CGceZU1wOu9PO3qn2p/
+despickler:$1$ab$FPyWVGc2x83IsQ7.q775k1
+richard:$1$ab$T/Cabrtf2TgOYXhZFlRct/
+rmshifler:$1$ab$/rOLL5LFn/3ZIa2TFnN4G.
+yxjing:$1$ab$N9t.xxEuc93HGa.twsZuP.
+jtanderson:$1$ab$Po1AuQSRCorWXHi8cIOhK/
+bfpierce:$1$ab$s2uqC2lMivvj9IX5PQ8KO/
+rmstallman:$1$ab$tThrUGNaCZBr224TYwxw2.
 
 import re
 import os

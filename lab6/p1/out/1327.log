@@ -1,0 +1,12 @@
+slurmstepd: error: *** JOB 1327 ON hpcl1-1 CANCELLED AT 2019-10-02T12:24:33 DUE TO TIME LIMIT ***
+--------------------------------------------------------------------------
+ORTE has lost communication with a remote daemon.
+
+  HNP daemon   : [[4498,0],0] on node hpcl1-1
+  Remote daemon: [[4498,0],4] on node hpcl1-5
+
+This is usually due to either a failure of the TCP network
+connection to the node, or possibly an internal failure of
+the daemon itself. We cannot recover from this failure, and
+therefore will terminate the job.
+--------------------------------------------------------------------------

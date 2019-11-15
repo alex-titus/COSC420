@@ -1,0 +1,404 @@
+--------------------------------------------------------------------------
+mpirun noticed that process rank 31 with PID 3427 on node hpcl4-2 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+8 total processes killed (some possibly by mpirun during cleanup)
+Rank 59 has 152916 lines
+Rank 13 has 139883 lines
+Rank 11 has 73990 lines
+Rank 8 has 120304 lines
+Rank 12 has 139059 lines
+Rank 9 has 159893 lines
+Rank 6 has 138731 lines
+Rank 17 has 118065 lines
+Rank 7 has 135278 lines
+Rank 10 has 154897 lines
+Rank 0 has 161741 lines
+Rank 1 has 320452 lines
+Rank 2 has 197560 lines
+Rank 3 has 179767 lines
+Rank 4 has 194715 lines
+Rank 5 has 272250 lines
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b815ee9d6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b814bfe9505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-6:10741:0:10741] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b701b822000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b70176e74f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b70176e76a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b70048f9505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+[hpcl4-5:10344:0:10344] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b70d083b000)
+==== backtrace ====
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b70c85b14f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b70c85b16a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b70b5793505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-2:3428 :0:3428] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b4aeaed3000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b4ae6e9d4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b4ae6e9d6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b4ad3f5d505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-3:7075 :0:7075] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ac24600c000)
+[hpcl4-3:7083 :0:7083] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b173a00c000)
+==== backtrace ====
+==== backtrace ====
+[hpcl4-6:10743:0:10743] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b1ebe50d000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ac241fd64f0]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b1eba4d74f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b1eba4d76a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b1ea75ba505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+[hpcl3-6:10343:0:10343] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b46cbfbb000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b1735fd64f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b1735fd66a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+===================
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ac241fd66a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+[hpcl3-6:10352:0:10352] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2af376303000)
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b46c7f854f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b46c7f856a2]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ac22f1f9505]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b46b5176505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+==== backtrace ====
+===================
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b1723087505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2af3724d74f0]
+[hpcl3-6:10344:0:10344] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b6a6bb93000)
+[hpcl4-3:7078 :0:7078] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b0f2db14000)
+    1  /lib64/libucs.so.0(+0x176a2) [0x2af3724d76a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2af35f560505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+==== backtrace ====
+[hpcl4-5:10346:0:10346] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b705dc0c000)
+==== backtrace ====
+==== backtrace ====
+[hpcl4-6:10744:0:10744] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b50af3f1000)
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b7059bd64f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b7059bd66a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b7046dea505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b6a67b5d4f0]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b0f299d94f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b0f299d96a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b0f16b97505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b6a67b5d6a2]
+==== backtrace ====
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+===================
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b6a54bdd505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b50ab2b64f0]
+[hpcl4-5:10342:0:10342] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2af86483b000)
+==== backtrace ====
+[hpcl4-1:2879 :0:2879] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2acb2ae93000)
+==== backtrace ====
+[hpcl4-1:2886 :0:2886] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b87ed70d000)
+==== backtrace ====
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b50ab2b66a2]
+[hpcl4-2:3429 :0:3429] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b4e0df14000)
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2acb26d584f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2acb26d586a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2acb13eaa505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+[hpcl4-2:3435 :0:3435] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b326220f000)
+    0  /lib64/libucs.so.0(+0x174f0) [0x2af85c18b4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2af85c18b6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2af849256505]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b87e95d24f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b87e95d26a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b87d67ea505]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b50984b6505]
+==== backtrace ====
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b4e09dd94f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b4e09dd96a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b4df6fd2505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+===================
+[hpcl4-3:7076 :0:7076] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2afec083b000)
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b325e1d94f0]
+[hpcl4-6:10740:0:10740] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b591e00c000)
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b325e1d96a2]
+==== backtrace ====
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b324b3f3505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2afeb85b14f0]
+[hpcl4-1:2880 :0:2880] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2aca9200c000)
+==== backtrace ====
+==== backtrace ====
+[hpcl4-1:2881 :0:2881] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ae52feb1000)
+==== backtrace ====
+    1  /lib64/libucs.so.0(+0x176a2) [0x2afeb85b16a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ae52bd764f0]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b5919fd64f0]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2aca8dfd64f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2aca8dfd66a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ae52bd766a2]
+[hpcl4-3:7077 :0:7077] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b0abcc4c000)
+==== backtrace ====
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b5919fd66a2]
+[hpcl4-2:3427 :0:3427] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b2e8eb77000)
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2aca7b095505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2afea5786505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+[hpcl4-2:3426 :0:3426] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b7bd6921000)
+[hpcl4-5:10343:0:10343] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2aabd7a8f000)
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b0ab4bbb4f0]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+==== backtrace ====
+==== backtrace ====
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b0ab4bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b0aa1c62505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b590709f505]
+==== backtrace ====
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ae518ec6505]
+===================
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b2e8ab414f0]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b2e8ab416a2]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2aabd39544f0]
+===================
+[hpcl4-6:10739:0:10739] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2aef3ffbb000)
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2aabd39546a2]
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b7bd28eb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b7bd28eb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+[hpcl4-3:7084 :0:7084] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ba7b1503000)
+    0  /lib64/libucs.so.0(+0x174f0) [0x2aef3bf854f0]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b7bbfa8b505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+[hpcl4-1:2887 :0:2887] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2adc5bfbb000)
+==== backtrace ====
+    1  /lib64/libucs.so.0(+0x176a2) [0x2aef3bf856a2]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2aabc0b1b505]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b2e77b27505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+==== backtrace ====
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl3-6:10345:0:10345] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b73d52ff000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2adc57f854f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2adc57f856a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ba7ad5d24f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ba7ad5d26a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ba79a6d4505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2aef2918b505]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b73d0fc34f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b73d0fc36a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b73be357505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2adc4515e505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+===================
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+===================
+[hpcl4-2:3433 :0:3433] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b2183b93000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b217fb5d4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b217fb5d6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b216cbe7505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25448:0:25448] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b4b80d51000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b4b78bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b4b78bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b4b65d77505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-5:10340:0:10340] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b0a30d4f000)
+==== backtrace ====
+[hpcl4-5:10341:0:10341] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b357beb1000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b0a28bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b0a28bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b0a15e6b505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b3577d764f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b3577d766a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b3564f3e505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl3-6:10348:0:10348] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b8f0bdac000)
+==== backtrace ====
+[hpcl3-6:10347:0:10347] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b51dcc4c000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b8f07d764f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b8f07d766a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b8ef4d8e505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b51d4bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b51d4bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b51c1c85505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl3-5:12240:0:12240] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ba267dac000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ba263d764f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ba263d766a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ba250d75505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl3-5:12242:0:12242] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2aec60c4c000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2aec58bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2aec58bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2aec45cc6505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25447:0:25447] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ba8d9e0f000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ba8d5dd94f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ba8d5dd96a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ba8c2f08505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25446:0:25446] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b8158b47000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b8150bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b8150bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b813dd35505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25453:0:25453] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b9011707000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b900d7d64f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b900d7d66a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b8ffa883505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25451:0:25451] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b52e0d51000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b52d8bbb4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b52d8bbb6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b52c5df9505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
+[hpcl4-4:25449:0:25449] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2b09531ef000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2b094f0b44f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2b094f0b46a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400dc8]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401120]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2b093c2bd505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================
