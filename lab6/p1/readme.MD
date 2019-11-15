@@ -1,3 +1,88 @@
+README
+
+7. Include a README file to document your code, any interesting design choices you made, and answer the
+following questions:
+(a) What is the theoretical time complexity of your algorithms (best and worst case), in terms of the
+input size?
+The theoretical time complexity of my algorithm is actually pretty shitty, due to me being a big dumb dumb,
+I believe it to be  O(N^4/P) is both the best and worst case scenario, since it's matrix multiplcation with
+extra steps each time
+(b) According to the data, does adding more nodes perfectly divide the time taken by the program?
+It does not, there appears to be a very slight speedup, but when attempting to do a 6 node run on a 30000 by 30000
+matrix my program never finished and I stopped running it after about 10 minutes.
+(c) What are some real-world software examples that would need the above routines? Why? Would
+they benefit greatly from using your distributed code?
+Anything needing to find large matrix eigen values:
+  Rocking Engineering, Banking, Cryptology, COSC420
+(d) How could the code be improved in terms of usability, efficiency, and robustness?
+Figure out the errors with using 6 nodes on a 30000 by 30000 matrix, and add another
+check to find the eigenvalues in sequential and check my parallel version of it.
+
+Example output!
+
+bash-4.2$ make
+mpicc -lm \-o driver driver.c
+bash-4.2$ mpirun -n 3 driver 10
+Eigenvalue for a 10 by 10: Value:7.032134 took 0.000000 seconds
+
+bash-4.2$ mpirun -n 3 driver 100
+Eigenvalue for a 100 by 100: Value:22.396268 took 0.000000 seconds
+
+bash-4.2$ mpirun -n 3 driver 1000
+Eigenvalue for a 1000 by 1000: Value:70.724708 took 0.070000 seconds
+
+bash-4.2$ mpirun -n 3 driver 10000
+Eigenvalue for a 10000 by 10000: Value:223.602507 took 3.490000 seconds
+
+bash-4.2$ mpirun -n 3 driver 30000
+Eigenvalue for a 30000 by 30000: Value:387.296429 took 55.250000 seconds
+
+bash-4.2$ mpirun -n 6 driver 10
+Eigenvalue for a 10 by 10: Value:7.032134 took 0.000000 seconds
+
+bash-4.2$ mpirun -n 6 driver 100
+Eigenvalue for a 100 by 100: Value:22.396268 took 0.000000 seconds
+
+bash-4.2$ mpirun -n 6 driver 1000
+Eigenvalue for a 1000 by 1000: Value:70.724708 took 0.090000 seconds
+
+bash-4.2$ mpirun -n 6 driver 10000
+Eigenvalue for a 10000 by 10000: Value:223.602507 took 3.350000 seconds
+
+
+driver.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <mpi.h>
+#include <math.h>
+#include "newmatrice.h"
+
+int main(int argc, char **argv){
+  MPI_Init(&argc, &argv);
+
+  // Setting up variables from command line
+  int n = atoi(argv[1]);
+  int matrix_size = n*n;
+  matrix A, B, C, D;
+  initMatrix(&A, n, n);
+  initValuedMatrix(&B, n, 1, 1.0);
+  initValuedMatrix(&C, n, 1, 1.0);
+
+  // Setting up MPI Information
+  int me;
+  int world_size;
+  MPI_Comm_rank(world, &me);
+  MPI_Comm_size(world, &world_size);
+
+  eigenvector(&A, &B, &C);
+  MPI_Finalize();
+  return 0;
+}
+
+
+newmatrice.h
 
 #define INDEX(n,m,i,j) m*i + j
 #define ACCESS(A,i,j) A->arr[INDEX(A->rows, A->cols, i, j)]
