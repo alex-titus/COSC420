@@ -1,0 +1,12 @@
+--------------------------------------------------------------------------
+mpirun noticed that process rank 56 with PID 11006 on node hpcl4-6 exited on signal 11 (Segmentation fault).
+--------------------------------------------------------------------------
+[hpcl4-6:11006:0:11006] Caught signal 11 (Segmentation fault: address not mapped to object at address 0x2ac8cbb93000)
+==== backtrace ====
+    0  /lib64/libucs.so.0(+0x174f0) [0x2ac8c7b5d4f0]
+    1  /lib64/libucs.so.0(+0x176a2) [0x2ac8c7b5d6a2]
+    2  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400d99]
+    3  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x401122]
+    4  /lib64/libc.so.6(__libc_start_main+0xf5) [0x2ac8b4c0b505]
+    5  /mnt/linuxlab/home/talexander3/COSC420/lab4/driver() [0x400bc9]
+===================

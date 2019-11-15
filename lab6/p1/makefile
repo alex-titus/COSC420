@@ -2,7 +2,7 @@
 CC=mpicc
 
 all: driver.c
-	$(CC) -lm \-o driver driver.c -lcrypt -std=c99
+	$(CC) -lm \-o driver driver.c
 
 clean:
 	$(RM) driver
