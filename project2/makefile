@@ -1,11 +1,12 @@
 #Make file for primes.c
 CC=mpicc
-binaries=driver
+CFLAGS= -lm -std=c99
+LDFLAGS=
 
 all: clean clearscreen compile
 
 compile:
-	$(CC) -lm \-o driver driver.c -std=c99
+	$(CC) $(CFLAGS) \-o driver driver.c
 
 clean:
 	$(RM) $(binaries)
