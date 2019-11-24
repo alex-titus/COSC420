@@ -237,7 +237,6 @@ int main()
 {
     srand(time(NULL));
     struct node *root = NULL;
-    //testArticle.article_id = "abc123";
     clock_t t0 = clock();
     struct arxivArticle testArticle1;
     struct arxivArticle testArticle2;
@@ -251,14 +250,6 @@ int main()
     testArticle4.article_id = "test2";
     testArticle5.article_id = "a";
     testArticle6.article_id = "test4";
-    /*for (int i = 0; i < NB_ELEMS; ++i){
-      struct arxivArticle testArticle;
-      char* buffer = malloc(10*sizeof(char));
-      convIntToStr(buffer, i);
-      printf("inserting %s\n", buffer);
-      testArticle.article_id = buffer;
-		  insert(&root, &testArticle);
-    }*/
     insert(&root, &testArticle1);
     insert(&root, &testArticle2);
     insert(&root, &testArticle3);
