@@ -168,9 +168,8 @@ void insert(struct node **root, struct arxivArticle* article)
     struct node *z = (struct node*)malloc(sizeof(struct node));
     z->article = article;
     z->left = z->right = z->parent = NULL;
-    printf("article->article_id = %s\n", article->article_id);
 
-     //if root is null make z as root
+    //if root is null make z as root
     if (*root == NULL)
     {
         z->color = 'B';
@@ -184,32 +183,31 @@ void insert(struct node **root, struct arxivArticle* article)
         // Follow standard BST insert steps to first insert the node
         while (x != NULL)
         {
-            printf("x->article->article_id = %s\nz->article->article_id = %s \n", x->article->article_id, z->article->article_id);
+            //printf("x->article->article_id = %s\nz->article->article_id = %s \n", x->article->article_id, z->article->article_id);
             y = x;
             if (strcmp(z->article->article_id, x->article->article_id) < 0){
 
-                printf("moving left\n");
+                //printf("moving left\n");
                 x = x->left;
             } else if (strcmp(z->article->article_id, x->article->article_id) > 0) {
-                printf("moving right\n");
+                //printf("moving right\n");
                 x = x->right;
-            } else {
-              break;
+            }
+            else {
+                //printf("duplicate, returning\n");
+                return;
             }
         }
         z->parent = y;
-        if (x == NULL){
-          x = z;
-        }
-        if (strcmp(z->article->article_id, x->article->article_id) > 0){
-            y->right = z;
-        } else if (strcmp(z->article->article_id, x->article->article_id) < 0){
+        if( y == NULL)
+            *root = z;
+        else if (strcmp(z->article->article_id, y->article->article_id) < 0){
             y->left = z;
+        } else if (strcmp(z->article->article_id, y->article->article_id) > 0){
+            y->right = z;
         }
         z->color = 'R';
 
-        // call insertFixUp to fix reb-black tree's property if it
-        // is voilated due to insertion.
         insertFixUp(root,z);
     }
 }
@@ -217,7 +215,7 @@ void insert(struct node **root, struct arxivArticle* article)
 // A utility function to traverse Red-Black tree in inorder fashion
 void inorder(struct node *root)
 {
-    printf("%s ", root);
+    //printf("%s ", root);
     if (root == NULL)
         return;
     inorder(root->left);

@@ -1,6 +1,6 @@
 #Make file for primes.c
 CC=mpicc
-CFLAGS= -lm -std=c99
+CFLAGS= -lm -std=c99 -g
 LDFLAGS=
 
 all: clean clearscreen compile
