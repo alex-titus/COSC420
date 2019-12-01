@@ -1,6 +1,8 @@
 
 in_file = "arxiv-citations.txt"
-out_file = "indexed-citations.dat"
+index_file = "indexed-citations.dat"
+article_ids_file = "article_ids.dat"
+
 article_indexes = {}
 lookup_later = []
 current_article = ""
@@ -41,8 +43,12 @@ with open(in_file, 'r') as citations:
             citation_dict[article].append(citation)
             #print(f"{line} has no listing outside of being cited")
 print(f"num articles {len(article_indexes)}, {i}")
-with open(out_file, 'w+') as of:
+with open(index_file, 'w+') as outf:
     for article, citations in citation_dict.items():
         if citations:
-            of.write(f"{article}:{citations}\n")
+            outf.write(f"{article}:{citations}\n")
+
+with open(article_ids_file, 'w+') as outf:
+    for article, id in article_indexes.items():
+        outf.write(f"{article}:{id}\n")
 #print(citation_dict)
