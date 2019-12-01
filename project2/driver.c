@@ -1,8 +1,13 @@
 // C program for Red-Black Tree insertion
+#define _GNU_SOURCE
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 #include<unistd.h>
+#include<fcntl.h>
+#include<sys/types.h>
+#include<sys/stat.h>
+//  and converts the character to ascii in the new file
 //A Red-Black tree node structure
 struct arxivArticle
 {
@@ -232,30 +237,53 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
+int citationsIndexer()
+{
+  FILE * fp;
+  char * line = NULL;
+  size_t len = 0;
+  ssize_t read;
+  int n = 0;
+  int clone;
+  char * test;
+
+  fp = fopen("./arxiv/arxiv-citations.txt", "r");
+  clone = open("./arxiv/arxiv-citations-indexed.txt", O_WRONLY | O_CREAT, 0770);
+
+  if (fp == NULL){
+    exit(EXIT_FAILURE);
+  }
+
+  while ((read = getline(&line, &len, fp)) != -1) {
+    if (line[0] == '-'){
+      /* We are currently looking at a citations, must skip all lines til a '+' */
+      do {
+        getline(&line, &len, fp);
+      } while (line[0] != '+');
+    } else {
+      sprintf(line, "%d %s", n, line);
+      write(clone, line, read);
+    }
+  }
+
+  fclose(fp);
+  if (line){
+    free(line);
+  }
+  exit(EXIT_SUCCESS);
+}
+
+
 /* Drier program to test above function*/
 int main()
 {
+    umask(0);
     srand(time(NULL));
     struct node *root = NULL;
     clock_t t0 = clock();
-    struct arxivArticle testArticle1;
-    struct arxivArticle testArticle2;
-    struct arxivArticle testArticle3;
-    struct arxivArticle testArticle4;
-    struct arxivArticle testArticle5;
-    struct arxivArticle testArticle6;
-    testArticle1.article_id = "test";
-    testArticle2.article_id = "test";
-    testArticle3.article_id = "test1";
-    testArticle4.article_id = "test2";
-    testArticle5.article_id = "a";
-    testArticle6.article_id = "test4";
-    insert(&root, &testArticle1);
-    insert(&root, &testArticle2);
-    insert(&root, &testArticle3);
-    insert(&root, &testArticle4);
-    insert(&root, &testArticle5);
-    insert(&root, &testArticle6);
+    /*
+    Do Computational Work Here
+
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");
     inorder(root);
@@ -264,6 +292,6 @@ int main()
 	  printf("insertion took %fms -> %f us/elem\n",
 		time_taken,
 		time_taken / NB_ELEMS * 1000);
-
+    */
     return 0;
 }
