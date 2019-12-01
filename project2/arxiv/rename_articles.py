@@ -2,6 +2,7 @@
 in_file = "arxiv-citations.txt"
 index_file = "indexed-citations.dat"
 article_ids_file = "article_ids.dat"
+hits_scores_file = "hits_scores.dab"
 
 article_indexes = {}
 lookup_later = []
@@ -43,10 +44,30 @@ with open(in_file, 'r') as citations:
             citation_dict[article].append(citation)
             #print(f"{line} has no listing outside of being cited")
 print(f"num articles {len(article_indexes)}, {i}")
+auth_scores = {}
+hub_scores = {}
 with open(index_file, 'w+') as outf:
     for article, citations in citation_dict.items():
         if citations:
             outf.write(f"{article}:{citations}\n")
+            hub_scores[article] = len(citations)
+            for cite in citations:
+                try:
+                    auth_scores[cite] += 1
+                except KeyError:
+                    auth_scores[cite] = 1
+with open(hits_scores_file, 'w+') as outf:
+    for name, id in article_indexes.items():
+        try:
+            hub = hub_scores[id]
+        except KeyError:
+            hub = 0
+        try:
+            auth = auth_scores[id]
+        except KeyError:
+            auth = 0
+        if hub != 0 or auth != 0:
+            outf.write(f"{id}:{hub}:{auth}\n")
 
 with open(article_ids_file, 'w+') as outf:
     for article, id in article_indexes.items():
