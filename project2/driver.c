@@ -23,9 +23,7 @@ int citationsIndexer()
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-  int n = 0;
   int clone;
-  char * test;
 
   fp = fopen("./arxiv/arxiv-citations.txt", "r");
   clone = open("./arxiv/arxiv-citations-indexed.txt", O_WRONLY | O_CREAT, 0770);
@@ -41,7 +39,6 @@ int citationsIndexer()
         getline(&line, &len, fp);
       } while (line[0] != '+');
     } else {
-      sprintf(line, "%d %s", n, line);
       write(clone, line, read);
     }
   }
