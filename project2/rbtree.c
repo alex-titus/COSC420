@@ -8,7 +8,6 @@ struct arxivArticle
 {
   char* title;
   char* author;
-  char* abstract;
   char* article_id;
 };
 
@@ -23,7 +22,6 @@ void initArxivArticle(struct arxivArticle *article){
   article->title = malloc(100 * sizeof(char));
   article->article_id = malloc(25 * sizeof(char));
   article->author = malloc(100 * sizeof(char));
-  article->abstract = malloc(1000 * sizeof(char));
 }
 
 void initNode(struct node *node){
@@ -184,7 +182,6 @@ void insert(struct node **root, struct arxivArticle* article)
     strcpy(z->article->article_id, article->article_id);
     strcpy(z->article->author, article->author);
     strcpy(z->article->title, article->title);
-    strcpy(z->article->abstract, article->abstract);
 
     z->left = z->right = z->parent = NULL;
 
@@ -232,7 +229,6 @@ void insert(struct node **root, struct arxivArticle* article)
         free(y);
         free(z->article->article_id);
         free(z->article->author);
-        free(z->article->abstract);
         free(z->article->title);
         free(z->article);
         free(z);
