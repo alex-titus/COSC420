@@ -19,6 +19,14 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
+char **parseLine(char *line){
+    char **returnWords = malloc(strlen(line) * sizeof(char));
+    int i, offset = 0;
+    for(i = 0; i < strlen(line); i++){
+
+    }
+}
+
 int metadataInsertion(struct node *root)
 {
   FILE * fp;
@@ -42,6 +50,20 @@ int metadataInsertion(struct node *root)
       strcpy(article.author, line);
       getline(&line, &len, fp);
       strcpy(article.abstract, line);
+      int i, j;
+      for(i = 0; i < strlen(line);){
+        int offset = 0;
+        int foundDelim = 0;
+        while(!foundDelim){
+          if (!((line[i] >= 48 && line[i] <= 57) || (line[i] >= 65 && line[i] <= 90) || (line[i] >= 97 && line[i] <= 122))){
+            foundDelim = 1;
+          }
+          i++;
+        }
+        int wordSize = i-offset;
+        char *insertWord = malloc((wordSize) * sizeof(char));
+        strncpy((line + offset), wordSize);
+      }
   }else
   {
     printf("article info:\n");
