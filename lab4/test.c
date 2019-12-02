@@ -55,8 +55,7 @@ int main(int argc, char* argv[])
 	//**********************************************************************************
 
 	int i, k;
-  char **{''}
-	int infile = open("xaa", O_RDONLY);
+	int infile = open("xag", O_RDONLY);
 	char buf;
 	char word[64];
 	char temp[64];
