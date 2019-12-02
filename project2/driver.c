@@ -67,6 +67,8 @@ int main()
     struct node *root = NULL;
     clock_t t0 = clock();
     int i;
+    struct arxivArticle article;
+    metadataInsertion(&root);
     /*
     for(i = 0; i < 1000; i++){
       char test[20];

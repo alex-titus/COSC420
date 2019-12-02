@@ -1,8 +1,8 @@
 #Make file for primes.c
 CC=mpicc
 
-all: driver.c
-	$(CC) -lm \-o driver driver.c -lcrypt -std=c99
+all:
+	mpicc -o a.out test.c -lcrypt
 
 clean:
-	$(RM) driver
+	$(RM) test
