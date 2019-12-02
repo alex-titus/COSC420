@@ -166,7 +166,11 @@ void insert(struct node **root, struct arxivArticle* article)
 {
     // Allocate memory for new node
     struct node *z = (struct node*)malloc(sizeof(struct node));
-    z->article = article;
+    strcpy(z->article->title, article->title);
+    strcpy(z->article->author, article->author);
+    strcpy(z->article->abstract, article->abstract);
+    strcpy(z->article->article_id, article->article_id);
+
     z->left = z->right = z->parent = NULL;
 
     //if root is null make z as root
