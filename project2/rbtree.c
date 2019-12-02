@@ -19,6 +19,18 @@ struct node
     struct node *left, *right, *parent;
 };
 
+void initArxivArticle(struct arxivArticle *article){
+  article->title = malloc(100 * sizeof(char));
+  article->article_id = malloc(25 * sizeof(char));
+  article->author = malloc(100 * sizeof(char));
+  article->abstract = malloc(1000 * sizeof(char));
+}
+
+void initNode(struct node *node){
+  node->article = malloc(4 * sizeof(char*));
+  initArxivArticle(node->article);
+}
+
 // Left Rotation
 void LeftRotate(struct node **root,struct node *x)
 {
@@ -166,14 +178,17 @@ void insert(struct node **root, struct arxivArticle* article)
 {
     // Allocate memory for new node
     struct node *z = (struct node*)malloc(sizeof(struct node));
-    strcpy(z->article->title, article->title);
-    strcpy(z->article->author, article->author);
-    strcpy(z->article->abstract, article->abstract);
+    initNode(z);
+
+    //z->article->article_id = article->article_id;
     strcpy(z->article->article_id, article->article_id);
+    strcpy(z->article->author, article->author);
+    strcpy(z->article->title, article->title);
+    strcpy(z->article->abstract, article->abstract);
 
     z->left = z->right = z->parent = NULL;
 
-    //if root is null make z as root
+    //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
     {
         z->color = 'B';
@@ -213,6 +228,14 @@ void insert(struct node **root, struct arxivArticle* article)
         z->color = 'R';
 
         insertFixUp(root,z);
+        free(x);
+        free(y);
+        free(z->article->article_id);
+        free(z->article->author);
+        free(z->article->abstract);
+        free(z->article->title);
+        free(z->article);
+        free(z);
     }
 }
 

@@ -19,30 +19,36 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
-int citationsIndexer()
+int metadataInsertion(struct node *root)
 {
   FILE * fp;
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
-  int clone;
 
-  fp = fopen("./arxiv/arxiv-citations.txt", "r");
-  clone = open("./arxiv/arxiv-citations-indexed.txt", O_WRONLY | O_CREAT, 0770);
+  fp = fopen("./arxiv/arxiv-metadata.txt", "r");
 
   if (fp == NULL){
     exit(EXIT_FAILURE);
   }
-
+  struct arxivArticle article;
   while ((read = getline(&line, &len, fp)) != -1) {
-    if (line[0] == '-'){
-      /* We are currently looking at a citations, must skip all lines til a '+' */
-      do {
-        getline(&line, &len, fp);
-      } while (line[0] != '+');
-    } else {
-      write(clone, line, read);
+    if (line[0] != '+'){
+      strcpy(article.article_id, line);
+      getline(&line, &len, fp);
+      strcpy(article.title, line);
+      getline(&line, &len, fp);
+      strcpy(article.author, line);
+      getline(&line, &len, fp);
+      strcpy(article.abstract, line);
     }
+
+    printf("article info:\n");
+    printf("%s\n", article.author);
+    printf("%s\n", article.abstract);
+    printf("%s\n", article.title);
+    printf("%s\n", article.article_id);
+    sleep(1);
   }
 
   fclose(fp);
@@ -61,16 +67,20 @@ int main()
     struct node *root = NULL;
     clock_t t0 = clock();
     int i;
-    for(i = 0; i < 100; i++){
-      struct arxivArticle article;
+    /*
+    for(i = 0; i < 1000; i++){
       char test[20];
       convIntToStr(test, i);
       article.article_id = test;
+      article.abstract = test;
+      article.author = test;
+      article.title = test;
       insert(&root, &article);
-      free(article);
+      free(article.abstract);
+      free(article.article_id);
+      free(article.author);
+      free(article.title);
     }
-    /*
-    Do Computational Work Here
     */
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");
@@ -80,6 +90,5 @@ int main()
 	  printf("insertion took %fms -> %f us/elem\n",
 		time_taken,
 		time_taken / NB_ELEMS * 1000);
-
     return 0;
 }
