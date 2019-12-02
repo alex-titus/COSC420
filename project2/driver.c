@@ -4,9 +4,11 @@
 #include<stdlib.h>
 #include<string.h>
 #include<unistd.h>
+#include<fcntl.h>
+#include<sys/stat.h>
 
 #include "rbtree.c"
-#include "matlib.h"
+
 
 #include <time.h>
 
@@ -58,9 +60,18 @@ int main()
     srand(time(NULL));
     struct node *root = NULL;
     clock_t t0 = clock();
+    int i;
+    for(i = 0; i < 100; i++){
+      struct arxivArticle article;
+      char test[20];
+      convIntToStr(test, i);
+      article.article_id = test;
+      insert(&root, &article);
+      free(article);
+    }
     /*
     Do Computational Work Here
-
+    */
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");
     inorder(root);
@@ -69,6 +80,6 @@ int main()
 	  printf("insertion took %fms -> %f us/elem\n",
 		time_taken,
 		time_taken / NB_ELEMS * 1000);
-    */
+
     return 0;
 }
