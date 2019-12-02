@@ -32,6 +32,7 @@ int metadataInsertion(struct node *root)
     exit(EXIT_FAILURE);
   }
   struct arxivArticle article;
+  initArxivArticle(&article);
   while ((read = getline(&line, &len, fp)) != -1) {
     if (line[0] != '+'){
       strcpy(article.article_id, line);
@@ -41,14 +42,15 @@ int metadataInsertion(struct node *root)
       strcpy(article.author, line);
       getline(&line, &len, fp);
       strcpy(article.abstract, line);
-    }
-
+  }else
+  {
     printf("article info:\n");
-    printf("%s\n", article.author);
+    printf("%s", article.article_id);
+    printf("%s", article.title);
+    printf("%s", article.author);
     printf("%s\n", article.abstract);
-    printf("%s\n", article.title);
-    printf("%s\n", article.article_id);
     sleep(1);
+    }
   }
 
   fclose(fp);
@@ -67,6 +69,7 @@ int main()
     struct node *root = NULL;
     clock_t t0 = clock();
     int i;
+    metadataInsertion(root);
     /*
     for(i = 0; i < 1000; i++){
       char test[20];
