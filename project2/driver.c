@@ -19,7 +19,7 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
-int metadataInsertion(struct node *root)
+int metadataInsertion(struct arxivArticle* articles)
 {
   FILE * fp;
   char * line = NULL;
@@ -41,14 +41,13 @@ int metadataInsertion(struct node *root)
       getline(&line, &len, fp);
       strcpy(article.author, line);
       getline(&line, &len, fp);
-      strcpy(article.abstract, line);
+
   }else
   {
     printf("article info:\n");
     printf("%s", article.article_id);
     printf("%s", article.title);
     printf("%s", article.author);
-    printf("%s\n", article.abstract);
     sleep(1);
     }
   }
@@ -69,22 +68,9 @@ int main()
     struct node *root = NULL;
     clock_t t0 = clock();
     int i;
-    metadataInsertion(root);
-    /*
-    for(i = 0; i < 1000; i++){
-      char test[20];
-      convIntToStr(test, i);
-      article.article_id = test;
-      article.abstract = test;
-      article.author = test;
-      article.title = test;
-      insert(&root, &article);
-      free(article.abstract);
-      free(article.article_id);
-      free(article.author);
-      free(article.title);
-    }
-    */
+    struct arxivArticle* = malloc(1396261 * sizeof(arxivArticle));
+    metadataInsertion(articles);
+
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");
     inorder(root);
