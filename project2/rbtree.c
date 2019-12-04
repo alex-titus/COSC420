@@ -9,7 +9,7 @@ struct arxivArticle
 {
   char* title;
   char* author;
-  char* article_id;
+  char* id;
 };
 
 struct article_node
@@ -26,31 +26,36 @@ struct word_node
     char color;
     struct word_node *left, *right, *parent;
 };
+void print_article(struct arxivArticle* article)
+{
+    printf("%s\n%s\n%s\n", article->id, article->title, article->author);
+}
 
 void initArxivArticle(struct arxivArticle *article, int id, int title, int author){
-  article->article_id = malloc(id * sizeof(char));
+  article->id = malloc(id * sizeof(char));
+  strcpy(article->id, "null");
   article->title = malloc(title * sizeof(char));
   article->author = malloc(author * sizeof(char));
 }
 
-void article_init_node(struct article_node *node){
+void article_init_node(struct article_node *node, int id, int title, int author){
   node->article = malloc(3 * sizeof(char*));
   node->left=node->right=node->parent=NULL;
-  initArxivArticle(node->article, 0, 0, 0);
-}
-
-void word_init_node(struct word_node *node){
-  node->word = malloc(30 * sizeof(char));
-  strcpy(node->word, "cthulu");
-  node->sub_root = malloc(sizeof(struct article_node));
-  article_init_node(node->sub_root);
-  strcpy(node->sub_root->article->article_id, "cthulu");
-  node->left=node->right=node->parent=NULL;
+  initArxivArticle(node->article, id, title, author);
 }
 
 void article_insert(struct article_node **root, struct arxivArticle* article);
+void word_init_node(struct word_node *node, char* word, struct arxivArticle* article){
+  node->word = malloc(30 * sizeof(char));
+  strcpy(node->word, word);
+  node->sub_root = malloc(sizeof(struct article_node));
+  article_init_node(node->sub_root, strlen(article->id)+1, strlen(article->title)+1, strlen(article->author)+1);
+  article_insert(&node->sub_root, article);
+  node->left=node->right=node->parent=NULL;
+}
+
 void word_insert_fixup(struct word_node **root, struct word_node *z);
-void word_insert(struct word_node **root, char* word, struct arxivArticle* article);
+void word_insert(struct word_node **root,struct word_node* z);
 struct word_node* word_search(char* search_word, struct word_node* root);
 
 void word_right_rotate(struct word_node **root,struct word_node *y);
@@ -143,14 +148,8 @@ void word_insert_fixup(struct word_node **root, struct word_node *z)
     (*root)->color = 'B'; //keep root always black
 }
 
-void word_insert(struct word_node **root, char* word, struct arxivArticle* article)
+void word_insert(struct word_node **root, struct word_node* z)
 {
-    // Allocate memory for new node
-    struct word_node *z = (struct word_node*)malloc(sizeof(struct word_node));
-    word_init_node(z);
-
-    strcpy(z->word, word);
-    article_insert(&z->sub_root, article);
     //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
     {
@@ -165,7 +164,7 @@ void word_insert(struct word_node **root, char* word, struct arxivArticle* artic
         // Follow standard BST article_insert steps to first article_insert the node
         while (x != NULL)
         {
-            //printf("x->article->article_id = %s\nz->article->article_id = %s \n", x->article->article_id, z->article->article_id);
+            //printf("x->article->id = %s\nz->article->id = %s \n", x->article->id, z->article->id);
             y = x;
             if (strcmp(z->word, x->word) < 0){
 
@@ -176,6 +175,7 @@ void word_insert(struct word_node **root, char* word, struct arxivArticle* artic
                 x = x->right;
             }
             else {
+                article_insert(&x->sub_root, z->sub_root->article);
                 //printf("duplicate, returning\n");
                 return;
             }
@@ -257,6 +257,12 @@ void word_right_rotate(struct word_node **root,struct word_node *y)
 
 struct word_node* word_search(char* search_word, struct word_node* root)
 {
+    if(root == NULL)
+        return NULL;
+        
+    if(strcmp(root->sub_root->article->id, "null"))
+        return NULL;
+
     struct word_node* current = root;
     while(current != NULL)
     {
@@ -429,15 +435,14 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
 {
     // Allocate memory for new node
     struct article_node *z = (struct article_node*)malloc(sizeof(struct article_node));
-    article_init_node(z);
 
-    //z->article->article_id = article->article_id;
-    strcpy(z->article->article_id, article->article_id);
+    article_init_node(z, strlen(article->id)+1, strlen(article->title)+1, strlen(article->author)+1);
+    strcpy(z->article->id, article->id);
     strcpy(z->article->author, article->author);
     strcpy(z->article->title, article->title);
 
     //if root is null make z as root    free(article.abstract);
-    if (*root == NULL)
+    if (strcmp((*root)->article->id, "null") == 0)
     {
         z->color = 'B';
         (*root) = z;
@@ -450,13 +455,13 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
         // Follow standard BST article_insert steps to first article_insert the node
         while (x != NULL)
         {
-            //printf("x->article->article_id = %s\nz->article->article_id = %s \n", x->article->article_id, z->article->article_id);
+            //printf("x->article->id = %s\nz->article->id = %s \n", x->article->id, z->article->id);
             y = x;
-            if (strcmp(z->article->article_id, x->article->article_id) < 0){
+            if (strcmp(z->article->id, x->article->id) < 0){
 
                 //printf("moving left\n");
                 x = x->left;
-            } else if (strcmp(z->article->article_id, x->article->article_id) > 0) {
+            } else if (strcmp(z->article->id, x->article->id) > 0) {
                 //printf("moving right\n");
                 x = x->right;
             }
@@ -468,9 +473,9 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
         z->parent = y;
         if( y == NULL)
             *root = z;
-        else if (strcmp(z->article->article_id, y->article->article_id) < 0){
+        else if (strcmp(z->article->id, y->article->id) < 0){
             y->left = z;
-        } else if (strcmp(z->article->article_id, y->article->article_id) > 0){
+        } else if (strcmp(z->article->id, y->article->id) > 0){
             y->right = z;
         }
         z->color = 'R';
@@ -478,7 +483,7 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
         article_insert_fixup(root,z);
         free(x);
         free(y);
-        free(z->article->article_id);
+        free(z->article->id);
         free(z->article->author);
         free(z->article->title);
         free(z->article);
@@ -493,13 +498,13 @@ struct article_node* article_search(char* search_id, struct article_node* root)
     struct article_node* current = root;
     while(current != NULL)
     {
-        if(strcmp(current->article->article_id, search_id) == 0)
+        if(strcmp(current->article->id, search_id) == 0)
         {
             return current;
         }
-        if(strcmp(search_id, current->article->article_id) < 0)
+        if(strcmp(search_id, current->article->id) < 0)
             current = current->left;
-        else if(strcmp(search_id, current->article->article_id) > 0)
+        else if(strcmp(search_id, current->article->id) > 0)
             current = current->right;
         }
     return NULL;//if the loop exits without returning that means the data it's     looking for isn't in the tree
@@ -512,7 +517,7 @@ void article_inorder(struct article_node *root)
     if (root == NULL)
         return;
     article_inorder(root->left);
-    printf("%s ", root->article->article_id);
+    printf("%s ", root->article->id);
     article_inorder(root->right);
 }
 

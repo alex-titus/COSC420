@@ -26,40 +26,47 @@ int metadataInsertion(struct word_node* root)
   size_t len = 0;
   ssize_t read;
 
-  fp = fopen("./arxiv/arxiv-metadata.txt", "r");
+  fp = fopen("./arxiv/shortened-arxiv-metadata.txt", "r");
+  //fp = fopen("./arxiv/arxiv-metadata.txt", "r");
 
   if (fp == NULL){
+      printf("File not found\n");
     exit(EXIT_FAILURE);
   }
   while ((read = getline(&line, &len, fp)) != -1) {
-    int idLength = strlen(line);
+    int idLength = strlen(line)+1;
     char *id = malloc(idLength * sizeof(char));
     if (line[0] != '+'){
       strcpy(id, line);
-      printf("line: %s", id);
+      id[idLength-1] = '\0';
+      printf("id: %s", id);
 
       getline(&line, &len, fp);
-      int titleLength = strlen(line);
+      int titleLength = strlen(line) + 1;
       char *title = malloc(titleLength * sizeof(char));
       strcpy(title, line);
+      title[titleLength-1] = '\0';
 
       getline(&line, &len, fp);
-      int authorLength = strlen(line);
+      int authorLength = strlen(line)+1;
       char *author = malloc(authorLength * sizeof(char));
       strcpy(author, line);
+      author[authorLength-1] = '\0';
 
       getline(&line, &len, fp);
       struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
       initArxivArticle(article, idLength, titleLength, authorLength);
 
-      /*strcpy(article->article_id, id);
+
+      strcpy(article->id, id);
       strcpy(article->author, author);
       strcpy(article->title, title);
+      //print_article(article);
 
       free(id);
       free(title);
       free(author);
-      */
+
       int i, j;
       int offset = 0;
       for(i = 0; i < strlen(line);){
@@ -71,24 +78,31 @@ int metadataInsertion(struct word_node* root)
             foundDelim = 1;
           i++;
         }
-        int wordSize = i-offset - 1;
+        int wordSize = i-offset;
 
-        if( wordSize > 1)
+        if( wordSize > 2)
         {
             //printf("\nwordsize: %d, ", wordSize);
-            char *insertWord = malloc((wordSize + 1) * sizeof(char));
+            char *insertWord = malloc((wordSize) * sizeof(char));
             strncpy(insertWord, (line + offset), wordSize);
-            insertWord[wordSize] = '\0';
+            insertWord[wordSize-1] = '\0';
+
+            struct word_node *new_word = (struct word_node*)malloc(sizeof(struct word_node));
+            word_init_node(new_word, insertWord, article);
+
+            article_insert(&new_word->sub_root, article);
+
             //printf("%s is the word\n", insertWord);
-            struct word_node* returney = word_search(insertWord, root);
-            if(returney != NULL){
-                //printf("found word %s\n", returney->word);
-            }else
-            {
-                word_insert(&root, insertWord, article);
+            //struct word_node* returney = word_search(insertWord, root);
+            // if(returney != NULL){
+            //     //printf("found word %s\n", returney->word);
+            // }else
+            // {
+            word_insert(&root, new_word);
                 //printf("\ninorder:\n");
                 //word_inorder(root);
-            }
+            // }
+            free(insertWord);
         }
         offset = i;
       }
@@ -101,6 +115,7 @@ int metadataInsertion(struct word_node* root)
     //sleep(10);
     }
   }
+
   word_inorder(root);
   fclose(fp);
   if (line){
@@ -115,20 +130,22 @@ int main()
 {
     umask(0);
     srand(time(NULL));
-    struct word_node *root = malloc(sizeof(struct word_node));
-    word_init_node(root);
+    struct word_node *cthulu_tree = NULL;
     clock_t t0 = clock();
     int i;
 
-    metadataInsertion(root);
+    printf("proccessing search index ...\n");
 
-    clock_t t1 = clock();
-    printf("inorder Traversal Is :\n");
-    word_inorder(root);
-    printf("\n");
-    float time_taken = (float)(t1 - t0) / CLOCKS_PER_SEC * 1000;
-	  printf("insertion took %fms -> %f us/elem\n",
-		time_taken,
-		time_taken / NB_ELEMS * 1000);
+    metadataInsertion(cthulu_tree);
+
+    printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
+    int done = 0;
+    while(!done)
+    {
+        char* input = malloc(100 * sizeof(char));
+        printf("Search: ");
+
+    }
+
     return 0;
 }
