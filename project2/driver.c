@@ -19,7 +19,7 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
-int metadataInsertion(struct arxivArticle* articles)
+int metadataInsertion(struct arxivArticle* articles, struct word_node* root)
 {
   FILE * fp;
   char * line = NULL;
@@ -41,10 +41,9 @@ int metadataInsertion(struct arxivArticle* articles)
       getline(&line, &len, fp);
       strcpy(article.author, line);
       getline(&line, &len, fp);
-      strcpy(article.abstract, line);
       int i, j;
+      int offset = 0;
       for(i = 0; i < strlen(line);){
-        int offset = 0;
         int foundDelim = 0;
         while(!foundDelim){
           if (!((line[i] >= 48 && line[i] <= 57) || (line[i] >= 65 && line[i] <= 90) || (line[i] >= 97 && line[i] <= 122))){
@@ -52,17 +51,32 @@ int metadataInsertion(struct arxivArticle* articles)
           }
           i++;
         }
-        int wordSize = i-offset;
-        char *insertWord = malloc((wordSize) * sizeof(char));
-        strncpy((line + offset), wordSize);
+        int wordSize = i-offset - 1;
+        if( wordSize > 1)
+        {
+            char *insertWord = malloc((wordSize) * sizeof(char));
+            strncpy(insertWord, (line + offset), wordSize);
+
+            printf("%s is the word\n", insertWord);
+            struct word_node* returney = word_search(insertWord, root);
+            if(returney != NULL)
+                printf("found word %s\n", returney->word);
+            else
+            {
+                word_insert(&root,insertWord, &article);
+                printf("\ninorder:\n");
+                word_inorder(root);
+            }
+        }
+        offset = i;
       }
   }else
   {
-    printf("article info:\n");
-    printf("%s", article.article_id);
-    printf("%s", article.title);
-    printf("%s", article.author);
-    sleep(1);
+    // printf("article info:\n");
+    // printf("%s", article.article_id);
+    // printf("%s", article.title);
+    // printf("%s", article.author);
+    sleep(10);
     }
   }
 
@@ -79,15 +93,15 @@ int main()
 {
     umask(0);
     srand(time(NULL));
-    struct node *root = NULL;
+    struct word_node *root = NULL;
     clock_t t0 = clock();
     int i;
-    struct arxivArticle* = malloc(1396261 * sizeof(arxivArticle));
-    metadataInsertion(articles);
+    struct arxivArticle* article = malloc(1396261 * sizeof(struct arxivArticle));
+    metadataInsertion(article, root);
 
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");
-    inorder(root);
+    word_inorder(root);
     printf("\n");
     float time_taken = (float)(t1 - t0) / CLOCKS_PER_SEC * 1000;
 	  printf("insertion took %fms -> %f us/elem\n",
