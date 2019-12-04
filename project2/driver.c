@@ -32,43 +32,62 @@ int metadataInsertion(struct word_node* root)
     exit(EXIT_FAILURE);
   }
   while ((read = getline(&line, &len, fp)) != -1) {
-    struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
-    initArxivArticle(article);
+    int idLength = strlen(line);
+    char *id = malloc(idLength * sizeof(char));
     if (line[0] != '+'){
-      strcpy(article->article_id, line);
-      printf("line: %s", article->article_id);
+      strcpy(id, line);
+      printf("line: %s", id);
+
       getline(&line, &len, fp);
-      strcpy(article->title, line);
+      int titleLength = strlen(line);
+      char *title = malloc(titleLength * sizeof(char));
+      strcpy(title, line);
+
       getline(&line, &len, fp);
-      strcpy(article->author, line);
+      int authorLength = strlen(line);
+      char *author = malloc(authorLength * sizeof(char));
+      strcpy(author, line);
+
       getline(&line, &len, fp);
+      struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
+      initArxivArticle(article, idLength, titleLength, authorLength);
+
+      /*strcpy(article->article_id, id);
+      strcpy(article->author, author);
+      strcpy(article->title, title);
+
+      free(id);
+      free(title);
+      free(author);
+      */
       int i, j;
       int offset = 0;
       for(i = 0; i < strlen(line);){
         int foundDelim = 0;
         while(!foundDelim){
-          if (!((line[i] >= 48 && line[i] <= 57) || (line[i] >= 65 && line[i] <= 90) || (line[i] >= 97 && line[i] <= 122))){
+          if ((line[i] >= 65 && line[i] <= 90))
+            line[i] += 32;
+          if (!((line[i] >= 48 && line[i] <= 57) || (line[i] >= 97 && line[i] <= 122)))
             foundDelim = 1;
-          }
           i++;
         }
         int wordSize = i-offset - 1;
 
         if( wordSize > 1)
         {
-            printf("wordsize %d", wordSize);
+            //printf("\nwordsize: %d, ", wordSize);
             char *insertWord = malloc((wordSize + 1) * sizeof(char));
             strncpy(insertWord, (line + offset), wordSize);
             insertWord[wordSize] = '\0';
-            printf("%s is the word\n", insertWord);
+            //printf("%s is the word\n", insertWord);
             struct word_node* returney = word_search(insertWord, root);
-            if(returney != NULL)
-                printf("found word %s\n", returney->word);
-            else
+            if(returney != NULL){
+                //printf("found word %s\n", returney->word);
+            }else
             {
                 word_insert(&root, insertWord, article);
-                printf("\ninorder:\n");
-                word_inorder(root);
+                //printf("\ninorder:\n");
+                //word_inorder(root);
             }
         }
         offset = i;
@@ -76,13 +95,13 @@ int metadataInsertion(struct word_node* root)
   }else
   {
     // printf("article info:\n");
-    // printf("%s", article.article_id);
+    // printf("%s", article.arword_initticle_id);
     // printf("%s", article.title);
     // printf("%s", article.author);
-    sleep(10);
+    //sleep(10);
     }
   }
-
+  word_inorder(root);
   fclose(fp);
   if (line){
     free(line);

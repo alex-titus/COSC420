@@ -27,16 +27,16 @@ struct word_node
     struct word_node *left, *right, *parent;
 };
 
-void initArxivArticle(struct arxivArticle *article){
-  article->title = malloc(100 * sizeof(char));
-  article->article_id = malloc(25 * sizeof(char));
-  article->author = malloc(100 * sizeof(char));
+void initArxivArticle(struct arxivArticle *article, int id, int title, int author){
+  article->article_id = malloc(id * sizeof(char));
+  article->title = malloc(title * sizeof(char));
+  article->author = malloc(author * sizeof(char));
 }
 
 void article_init_node(struct article_node *node){
   node->article = malloc(3 * sizeof(char*));
   node->left=node->right=node->parent=NULL;
-  initArxivArticle(node->article);
+  initArxivArticle(node->article, 0, 0, 0);
 }
 
 void word_init_node(struct word_node *node){
