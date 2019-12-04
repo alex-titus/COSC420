@@ -19,7 +19,7 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
-int metadataInsertion(struct arxivArticle* articles, struct word_node* root)
+int metadataInsertion(struct word_node* root)
 {
   FILE * fp;
   char * line = NULL;
@@ -31,15 +31,16 @@ int metadataInsertion(struct arxivArticle* articles, struct word_node* root)
   if (fp == NULL){
     exit(EXIT_FAILURE);
   }
-  struct arxivArticle article;
-  initArxivArticle(&article);
   while ((read = getline(&line, &len, fp)) != -1) {
+    struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
+    initArxivArticle(article);
     if (line[0] != '+'){
-      strcpy(article.article_id, line);
+      strcpy(article->article_id, line);
+      printf("line: %s", article->article_id);
       getline(&line, &len, fp);
-      strcpy(article.title, line);
+      strcpy(article->title, line);
       getline(&line, &len, fp);
-      strcpy(article.author, line);
+      strcpy(article->author, line);
       getline(&line, &len, fp);
       int i, j;
       int offset = 0;
@@ -52,18 +53,20 @@ int metadataInsertion(struct arxivArticle* articles, struct word_node* root)
           i++;
         }
         int wordSize = i-offset - 1;
+
         if( wordSize > 1)
         {
-            char *insertWord = malloc((wordSize) * sizeof(char));
+            printf("wordsize %d", wordSize);
+            char *insertWord = malloc((wordSize + 1) * sizeof(char));
             strncpy(insertWord, (line + offset), wordSize);
-
+            insertWord[wordSize] = '\0';
             printf("%s is the word\n", insertWord);
             struct word_node* returney = word_search(insertWord, root);
             if(returney != NULL)
                 printf("found word %s\n", returney->word);
             else
             {
-                word_insert(&root,insertWord, &article);
+                word_insert(&root, insertWord, article);
                 printf("\ninorder:\n");
                 word_inorder(root);
             }
@@ -93,11 +96,12 @@ int main()
 {
     umask(0);
     srand(time(NULL));
-    struct word_node *root = NULL;
+    struct word_node *root = malloc(sizeof(struct word_node));
+    word_init_node(root);
     clock_t t0 = clock();
     int i;
-    struct arxivArticle* article = malloc(1396261 * sizeof(struct arxivArticle));
-    metadataInsertion(article, root);
+
+    metadataInsertion(root);
 
     clock_t t1 = clock();
     printf("inorder Traversal Is :\n");

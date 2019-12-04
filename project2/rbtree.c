@@ -35,12 +35,17 @@ void initArxivArticle(struct arxivArticle *article){
 
 void article_init_node(struct article_node *node){
   node->article = malloc(3 * sizeof(char*));
+  node->left=node->right=node->parent=NULL;
   initArxivArticle(node->article);
 }
 
 void word_init_node(struct word_node *node){
   node->word = malloc(30 * sizeof(char));
+  strcpy(node->word, "cthulu");
   node->sub_root = malloc(sizeof(struct article_node));
+  article_init_node(node->sub_root);
+  strcpy(node->sub_root->article->article_id, "cthulu");
+  node->left=node->right=node->parent=NULL;
 }
 
 void article_insert(struct article_node **root, struct arxivArticle* article);
@@ -143,8 +148,8 @@ void word_insert(struct word_node **root, char* word, struct arxivArticle* artic
     // Allocate memory for new node
     struct word_node *z = (struct word_node*)malloc(sizeof(struct word_node));
     word_init_node(z);
+
     strcpy(z->word, word);
-    z->left = z->right = z->parent = NULL;
     article_insert(&z->sub_root, article);
     //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
@@ -187,10 +192,10 @@ void word_insert(struct word_node **root, char* word, struct arxivArticle* artic
 
         word_insert_fixup(root,z);
         free(x);
-        free(y);
-        free(z->word);
-        free(z->sub_root);
-        free(z);
+        //free(y);
+        //free(z->word);
+        //free(z->sub_root);
+        //free(z);
     }
 
 }
@@ -199,8 +204,8 @@ void word_insert(struct word_node **root, char* word, struct arxivArticle* artic
 // Left Rotation
 void word_left_rotate(struct word_node **root,struct word_node *x)
 {
-    if (!x || !x->right)
-        return ;
+    if (x == NULL || x->right == NULL)
+        return;
     //y stored pointer of right child of x
     struct word_node *y = x->right;
 
@@ -221,7 +226,8 @@ void word_left_rotate(struct word_node **root,struct word_node *x)
     // store y at the place of x
     else if (x == x->parent->left)
         x->parent->left = y;
-    else    x->parent->right = y;
+    else
+        x->parent->right = y;
 
     // make x as left child of y
     y->left = x;
@@ -429,8 +435,6 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
     strcpy(z->article->article_id, article->article_id);
     strcpy(z->article->author, article->author);
     strcpy(z->article->title, article->title);
-
-    z->left = z->right = z->parent = NULL;
 
     //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
