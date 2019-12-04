@@ -100,12 +100,14 @@ int metadataInsertion(struct word_node* root)
             // {
             word_insert(&root, new_word);
                 //printf("\ninorder:\n");
-                //word_inorder(root);
             // }
             free(insertWord);
         }
         offset = i;
       }
+      puts("\n\n\n");
+      word_inorder(root);
+      sleep(1);
   }else
   {
     // printf("article info:\n");
@@ -144,7 +146,10 @@ int main()
     {
         char* input = malloc(100 * sizeof(char));
         printf("Search: ");
+        scanf("%s", input);
+        printf("%s\n", input);
 
+        struct word_node* ret = word_search(input, cthulu_tree);
     }
 
     return 0;
