@@ -535,6 +535,3 @@ void article_inorder(struct article_node *root)
     printf("%s ", root->article->id);
     article_inorder(root->right);
 }
-
-
-// ========================== WORD TREE ============================
