@@ -9,7 +9,14 @@
 #include<mpi.h>
 #include "rbtree.c"
 
-
+//don't add stopwords to tree
+//remove author and title from tree
+//add file offsets to tree
+// * search return article id's
+// * after nodes return search results, root node has to parse the author lists and titles
+//parse the citations
+// * filter the subgraphs
+//pagerank
 
 #define NB_ELEMS 10
 
