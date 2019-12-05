@@ -39,9 +39,18 @@ void initArxivArticle(struct arxivArticle *article, int id, int title, int autho
 }
 
 void article_init_node(struct article_node *node, int id, int title, int author){
-  node->article = malloc(3 * sizeof(char*));
+  node->article = malloc(sizeof(struct arxivArticle));
   node->left=node->right=node->parent=NULL;
   initArxivArticle(node->article, id, title, author);
+}
+
+void delete_article(struct article_node* del)
+{
+    free(del->article->id);
+    free(del->article->author);
+    free(del->article->title);
+    free(del->article);
+    free(del);
 }
 
 void article_insert(struct article_node **root, struct arxivArticle* article);
@@ -176,6 +185,10 @@ void word_insert(struct word_node **root, struct word_node* z)
             }
             else {
                 article_insert(&x->sub_root, z->sub_root->article);
+                delete_article(z->sub_root);
+                free(z->word);
+                free(z);
+
                 //printf("duplicate, returning\n");
                 return;
             }
@@ -259,7 +272,7 @@ struct word_node* word_search(char* search_word, struct word_node* root)
 {
     if(root == NULL)
         return NULL;
-        
+
     if(strcmp(root->sub_root->article->id, "null"))
         return NULL;
 
@@ -445,6 +458,7 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
     if (strcmp((*root)->article->id, "null") == 0)
     {
         z->color = 'B';
+        delete_article(*root);
         (*root) = z;
     }
     else
@@ -466,6 +480,7 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
                 x = x->right;
             }
             else {
+                delete_article(z);
                 //printf("duplicate, returning\n");
                 return;
             }
@@ -482,12 +497,12 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
 
         article_insert_fixup(root,z);
         free(x);
-        free(y);
-        free(z->article->id);
-        free(z->article->author);
-        free(z->article->title);
-        free(z->article);
-        free(z);
+        //free(y);
+        //free(z->article->id);
+        //free(z->article->author);
+        //free(z->article->title);
+        //free(z->article);
+        //free(z);
     }
 
 }

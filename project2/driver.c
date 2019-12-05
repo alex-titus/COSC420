@@ -19,14 +19,58 @@ int convIntToStr(char * str, int x){
   return (strlen(str));
 }
 
-int metadataInsertion(struct word_node* root)
+MPI_Offset find_offset(int rank, int num_nodes, MPI_File* file)
+{//sets the offset of file to where the node should start
+//and returns the length of how many bytes it should read
+	MPI_File_seek(*file, 0, MPI_SEEK_END);
+	MPI_Offset file_len;
+	MPI_File_get_size(*file, &file_len);
+	MPI_Offset starting_point = (file_len / num_nodes) * rank;
+	MPI_Offset ending_point = (file_len / num_nodes) * (rank + 1) -1;
+
+	MPI_Status status;
+	char c = ' ';
+	//printf("Node#%d starting at %d\n", rank, starting_point);
+	MPI_File_seek(*file, starting_point, MPI_SEEK_SET);
+	if(rank != 0)
+	{
+		while( c != '\n' && c != 0)
+		{
+			//MPI_File_seek(file, -2, MPI_SEEK_CUR);
+			MPI_File_read(*file, &c, 1, MPI_CHAR, &status);
+			//printf("\tNode #%d s reading char %c\n", rank, c);
+		}
+		MPI_File_get_position(*file, &starting_point);
+	//	printf("\n\noffset before seek is %d\n", starting_point);
+		MPI_File_get_position(*file, &starting_point);
+		//printf("offset after seek is %d\n\n", starting_point);
+	}
+	//printf("Node#%d starting at %d\n", rank, starting_point);
+
+	c = ' ';
+	MPI_File_seek(*file, ending_point, MPI_SEEK_SET);
+	while( c != '\n'  && c != 0)
+	{
+		MPI_File_read(*file, &c, 1, MPI_CHAR, &status);
+		//printf("\tNode #%d e reading char %c\n", rank, c);
+	}
+	MPI_File_seek(*file, -1, MPI_SEEK_CUR);
+
+	MPI_File_get_position(*file, &ending_point);
+	//printf("Node #%d ended at %d\n", rank, ending_point);//minus 2 so it goes back past the newline
+
+	MPI_File_seek(*file, starting_point, MPI_SEEK_SET);
+	return ending_point;
+}
+
+int metadataInsertion(struct word_node* root, char* meta_file)
 {
   FILE * fp;
   char * line = NULL;
   size_t len = 0;
   ssize_t read;
 
-  fp = fopen("./arxiv/shortened-arxiv-metadata.txt", "r");
+  fp = fopen(meta_file, "r");
   //fp = fopen("./arxiv/arxiv-metadata.txt", "r");
 
   if (fp == NULL){
@@ -39,7 +83,7 @@ int metadataInsertion(struct word_node* root)
     if (line[0] != '+'){
       strcpy(id, line);
       id[idLength-1] = '\0';
-      printf("id: %s", id);
+      //printf("id: %s", id);
 
       getline(&line, &len, fp);
       int titleLength = strlen(line) + 1;
@@ -63,7 +107,6 @@ int metadataInsertion(struct word_node* root)
       strcpy(article->title, title);
       //print_article(article);
 
-      free(id);
       free(title);
       free(author);
 
@@ -105,20 +148,19 @@ int metadataInsertion(struct word_node* root)
         }
         offset = i;
       }
-      puts("\n\n\n");
-      word_inorder(root);
-      sleep(1);
-  }else
-  {
-    // printf("article info:\n");
-    // printf("%s", article.arword_initticle_id);
-    // printf("%s", article.title);
-    // printf("%s", article.author);
-    //sleep(10);
-    }
+      //puts("\n\n\n");
+      //word_inorder(root);
+      free(article->id);
+      free(article->title);
+      free(article->author);
+      free(article);
+      //sleep(1);
+  }
+  free(id);
+
   }
 
-  word_inorder(root);
+  //word_inorder(root);
   fclose(fp);
   if (line){
     free(line);
@@ -137,8 +179,8 @@ int main()
     int i;
 
     printf("proccessing search index ...\n");
-
-    metadataInsertion(cthulu_tree);
+    char meta_file[100] = "./arxiv/arxiv-metadata.txt\0";
+    metadataInsertion(cthulu_tree, meta_file);
 
     printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
     int done = 0;
