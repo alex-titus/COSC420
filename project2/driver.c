@@ -6,7 +6,7 @@
 #include<unistd.h>
 #include<fcntl.h>
 #include<sys/stat.h>
-
+#include<mpi.h>
 #include "rbtree.c"
 
 
@@ -204,6 +204,10 @@ int metadataInsertion(struct word_node* root, char* meta_file)
 /* Drier program to test above function*/
 int main()
 {
+	MPI_Init(NULL, NULL);
+	MPI_Comm world = MPI_COMM_WORLD;
+	int rank, world_size;
+	MPI_Comm_rank(world, &rank);
     umask(0);
     srand(time(NULL));
     struct word_node *cthulu_tree = NULL;
@@ -211,19 +215,28 @@ int main()
     int i;
 
     printf("proccessing search index ...\n");
-    char meta_file[100] = "./arxiv/arxiv-metadata.txt\0";
+    char meta_file[100] = "./arxiv/shorten-arxiv-metadata.txt\0";
     metadataInsertion(cthulu_tree, meta_file);
-
-    printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
+    if(rank == 0)
+		printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
     int done = 0;
     while(!done)
-    {
-        char* input = malloc(100 * sizeof(char));
-        printf("Search: ");
-        scanf("%s", input);
-        printf("%s\n", input);
-
-        struct word_node* ret = word_search(input, cthulu_tree);
+	{
+		char* input = malloc(100 * sizeof(char));
+		if(rank == 0){
+			printf("Search: ");
+			scanf("%s", input);
+			printf("%s\n", input);
+		}
+		MPI_Bcast(
+			input,
+			strlen(input),
+			MPI_CHAR,
+			0,
+			world);
+		struct word_node* ret = word_search(input, cthulu_tree);
+		
+		//search_results
     }
 
     return 0;

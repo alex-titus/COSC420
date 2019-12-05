@@ -1,5 +1,5 @@
 #Make file for primes.c
-CC=gcc
+CC=mpicc
 CFLAGS= -lm -std=c99 -g
 binaries=driver
 LDFLAGS=
