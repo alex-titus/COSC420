@@ -30,12 +30,17 @@ MPI_Offset find_offset(int rank, int num_nodes, MPI_File* file)
 
 	MPI_Status status;
 	char c = ' ';
+    int num_plusi = 0;
 	//printf("Node#%d starting at %d\n", rank, starting_point);
 	MPI_File_seek(*file, starting_point, MPI_SEEK_SET);
 	if(rank != 0)
 	{
-		while( c != '\n' && c != 0)
+		while( num_plusi < 6 && c != 0)
 		{
+            if(c=='+')
+                num_plusi++;
+            else
+                num_plusi = 0;
 			//MPI_File_seek(file, -2, MPI_SEEK_CUR);
 			MPI_File_read(*file, &c, 1, MPI_CHAR, &status);
 			//printf("\tNode #%d s reading char %c\n", rank, c);
@@ -62,6 +67,33 @@ MPI_Offset find_offset(int rank, int num_nodes, MPI_File* file)
 	MPI_File_seek(*file, starting_point, MPI_SEEK_SET);
 	return ending_point;
 }
+
+// MPI_Status status;
+//
+// MPI_Offset words_pointer_pos = 0;
+// //rewind(words_fp);
+//
+// pass_num = 0;
+// while (words_pointer_pos <= endpoint)
+// {
+//     MPI_File_get_position(mpi_words_file, &words_pointer_pos);
+//     c = ' ';
+//     i = 10;
+//     while(c != '\n' && c != 0)
+//     {
+//         MPI_File_read(mpi_words_file, &c, 1, MPI_CHAR, &status);
+//         word[i++] = c;
+//     }
+//     //MPI_File_seek(mpi_words_file, 1, MPI_SEEK_CUR);
+//     word[i] = 0;
+//     int word_len = strlen(word+ 10) - 1;
+//     word[word_len+ 10] = 0;
+//     //printf("checking %s\n", word+10);
+//     // print_char_vals(word+10);
+//     strcpy(word2, word+10);
+//     //int word_len = strlen(word2);
+//
+//     word_num++;
 
 int metadataInsertion(struct word_node* root, char* meta_file)
 {
