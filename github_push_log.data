@@ -1,0 +1,248 @@
+commit bc25736c904246bba0d8ed466f1eb03e24ed7b5f
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Thu Dec 5 11:24:03 2019 -0500
+
+    file read stuff
+
+commit 9fcdc1baa8f8a9daa7be4bac65fe70019e2f2321
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Thu Dec 5 10:47:28 2019 -0500
+
+    Remove memory leaks
+
+commit d537cb73663d4f7ce11312c8e66aac2eebebf42a
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Wed Dec 4 18:16:19 2019 -0500
+
+    eh
+
+commit fdebda0727a8ed80fc48749fde93a4fd3d32e33e
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Wed Dec 4 18:01:58 2019 -0500
+
+    runs with memory errors, hella leaks
+
+commit d43e9424fc139eaf7463d406ee5eeb12b5549ff9
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Wed Dec 4 11:55:45 2019 -0500
+
+    RBTree Update
+
+commit d9ea6d381c1dfc1e02532bb4d7be11ea48c9d62b
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Tue Dec 3 20:09:57 2019 -0500
+
+    red black tree of redblack trees is pain, also cthulu
+
+commit e53ea06b4d8321974f83e95010b19bd6889eac18
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Tue Dec 3 19:23:19 2019 -0500
+
+    compilling but segfault
+
+commit 30c59167f8a73510d5f9483d09cd82837a42fb08
+Merge: 6bc504f 2c917c8
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Mon Dec 2 12:01:55 2019 -0500
+
+    Merge branch 'master' of https://github.com/alex-titus/COSC420
+
+commit 6bc504f59fd9f2c1ab420bdc22801a00fc42bbf4
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Mon Dec 2 12:01:18 2019 -0500
+
+    Commit
+
+commit 2c917c8cf4fc92846746112ceaa3e9ae08bcbd29
+Merge: 497d846 9a6bcbe
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Mon Dec 2 11:25:34 2019 -0500
+
+    Merge branch 'master' of github.com:alex-titus/COSC420
+
+commit 497d8463be688adbd6a0c5419b8b3555580e97e4
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Mon Dec 2 11:25:27 2019 -0500
+
+    remove abstract
+
+commit 9a6bcbeea554297547ee1deba6b6c4f46862bb8c
+Merge: d78cbfa d747a86
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 22:10:19 2019 -0500
+
+    Merge branch 'master' of https://github.com/alex-titus/COSC420
+
+commit d78cbfa4067ca42bb34b46b228d30dd84d88e801
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 22:09:47 2019 -0500
+
+    Commit :)
+
+commit d747a86721dfc48535de61d653a5df55ff033670
+Merge: bbb1c70 2aabd2f
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 21:37:07 2019 -0500
+
+    merge conflicts
+
+commit bbb1c7085889032d1bd157c23963ea20addc6d3a
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 21:36:02 2019 -0500
+
+    unique_words
+
+commit 2aabd2fac317974d217a0fdb84695e8cd51d0844
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 21:34:12 2019 -0500
+
+    Hope I didn't break anything :)
+
+commit a70be757c04c41744d9e9a7e1381458deaa8131d
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 20:16:02 2019 -0500
+
+    RB Update + Driver
+
+commit 02506b0245b6b3a505a2531b1a3cf50d9c474e31
+Merge: 59b455d 9ed7fd4
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 19:03:27 2019 -0500
+
+    Merge branch 'master' of https://github.com/alex-titus/COSC420
+
+commit 59b455df093fb53e3643c3fe5cd0eed51a81db95
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 19:03:23 2019 -0500
+
+    Commit
+
+commit 9ed7fd46d6dad053f9e67e9cc582d77b432999cb
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 19:02:17 2019 -0500
+
+    rbtree copy data insert
+
+commit 86c00940fc9c22f2e5e54749b328e5dc9774cb62
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 18:22:21 2019 -0500
+
+    metadata changes
+
+commit 0b4a831f84e9766dfc2f06cf9c9c1485323e6ccd
+Merge: 3cebeee 0301738
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 16:54:29 2019 -0500
+
+    Merge branch 'master' of https://github.com/alex-titus/COSC420
+
+commit 3cebeee70e21c88b322b315b6ada67b469d241f6
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Dec 1 16:52:12 2019 -0500
+
+    Old Indexer Commit
+
+commit 0301738879741d040b8f6ce56fb149b4c3005693
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 14:24:11 2019 -0500
+
+    main->driver.c | rbtree -> rbtree.c | add matlib
+
+commit f9696f7cf224c9c85661e8700a3b633ae84eb425
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 14:15:39 2019 -0500
+
+    create article id metafile
+
+commit 6bd2fc44063b084278df66c03ca6ddd3756c2d18
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 13:43:33 2019 -0500
+
+    change article names to indexes and make list of citations
+
+commit 8592ae9207a7491e8a56eca256fb01f15302ce1b
+Merge: a849f24 93c685a
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Sun Dec 1 11:42:45 2019 -0500
+
+    rbtree fix merge
+
+commit 93c685afcff0c0dece86f352b19598a3a4f4ea77
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Mon Nov 25 11:48:31 2019 -0500
+
+    Commit
+
+commit bef72b40d5d9f5d156a90248c3de41f1668e69cc
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Mon Nov 25 11:28:50 2019 -0500
+
+    unignore .txt
+
+commit 293d511a42cc5399ce99b5ec58cc05c9f63735ab
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Nov 24 17:46:32 2019 -0500
+
+    Github Master
+
+commit cba4383ae43f3eb1b96202c7e69d3fba813a02c8
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Nov 24 17:44:48 2019 -0500
+
+    I apparently have no idea how git works
+
+commit 704e232417ce8ffe3c3f961ccac2c601be405d9c
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Sun Nov 24 17:16:11 2019 -0500
+
+    Exam 2 Push
+
+commit a849f24d6d30f5797ecea928b977c5d13161f6e2
+Author: JacksonBellinger <jdunnbellinger@gmail.com>
+Date:   Thu Nov 21 13:22:01 2019 -0500
+
+    Fixed RBTree insert
+
+commit 02340d94157c253dae2e467cf75c4aff5973ec84
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Wed Nov 20 12:09:12 2019 -0500
+
+    Project 2 RBT + Stop Words Push
+
+commit aac3469fc2c2df1d775825031f21ded84b8fca75
+Author: Alexander Roy Titus <talexander3@hpcl2-5.salisbury.edu>
+Date:   Tue Nov 19 12:42:54 2019 -0500
+
+    Project 2 first commit
+
+commit 7e2bf2f72ed3855174a6bd86e2f355f7ed30478b
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Fri Nov 15 18:20:56 2019 -0500
+
+    Update
+
+commit eea626d7ee3bb02cc9beb900e5513be72f7965e0
+Author: Alexander titus <talexander3@gulls.salisbury.edu>
+Date:   Fri Nov 15 08:21:13 2019 -0500
+
+    Labs push
+
+commit 9e271bb5cdcd1129e844c3a7b6116f46f50efa4d
+Author: Alexander Roy Titus <talexander3@hpcl1-5.salisbury.edu>
+Date:   Tue Oct 22 16:10:02 2019 -0400
+
+    lab1-3 and project push
+
+commit e0ec64938ec0430e05636e0c566c8c4a6e8e7c44
+Author: Alex Titus <talexander3@gulls.salisbury.edu>
+Date:   Thu Oct 10 23:39:03 2019 -0400
+
+    Lab 4 init push
+    
+    Pushing first copy of lab 4, only created new master word list so far.
+
+commit d862ac4ad61c28b81b252a94215e81969e581da3
+Author: Alex Titus <talexander3@gulls.salisbury.edu>
+Date:   Thu Oct 10 10:37:25 2019 -0400
+
+    Initial commit
