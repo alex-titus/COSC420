@@ -7,14 +7,14 @@
 
 struct arxivArticle
 {
-  char* title;
-  char* author;
   char* id;
+  int file_offset;
 };
 
 struct article_node
 {
     struct arxivArticle* article;
+    int size;
     char color;
     struct article_node *left, *right, *parent;
 };
@@ -28,27 +28,26 @@ struct word_node
 };
 void print_article(struct arxivArticle* article)
 {
-    printf("%s\n%s\n%s\n", article->id, article->title, article->author);
+    printf("%s\n", article->id);
 }
 
-void initArxivArticle(struct arxivArticle *article, int id, int title, int author){
-  article->id = malloc(id * sizeof(char));
+void initArxivArticle(struct arxivArticle *article, char* id, int offset){
+  article->id = malloc(strlen(id) * sizeof(char));
+  strcpy(article->id, id);
+  article->file_offset = offset;
   strcpy(article->id, "null");
-  article->title = malloc(title * sizeof(char));
-  article->author = malloc(author * sizeof(char));
 }
 
-void article_init_node(struct article_node *node, int id, int title, int author){
+void article_init_node(struct article_node *node, char* id, int offset){
   node->article = malloc(sizeof(struct arxivArticle));
+  node->size = 0;
   node->left=node->right=node->parent=NULL;
-  initArxivArticle(node->article, id, title, author);
+  initArxivArticle(node->article, id, offset);
 }
 
 void delete_article(struct article_node* del)
 {
     free(del->article->id);
-    free(del->article->author);
-    free(del->article->title);
     free(del->article);
     free(del);
 }
@@ -58,7 +57,7 @@ void word_init_node(struct word_node *node, char* word, struct arxivArticle* art
   node->word = malloc(30 * sizeof(char));
   strcpy(node->word, word);
   node->sub_root = malloc(sizeof(struct article_node));
-  article_init_node(node->sub_root, strlen(article->id)+1, strlen(article->title)+1, strlen(article->author)+1);
+  article_init_node(node->sub_root, article->id, article->file_offset);
   article_insert(&node->sub_root, article);
   node->left=node->right=node->parent=NULL;
 }
@@ -300,6 +299,17 @@ void word_inorder(struct word_node *root)
     printf("%s ", root->word);
     word_inorder(root->right);
 }
+
+void word_inorder_list(struct word_node* root, char** list)
+{
+    int i = 0;
+    if (root == NULL)
+        return;
+    word_inorder_list(root->left, list);
+    sprintf(list[i], "%s", root->word);
+    word_inorder_list(root->right, list);
+}
+
 //===================================== ARTICLE TREE ===================================
 // Left Rotation
 void article_left_rotate(struct article_node **root,struct article_node *x)
@@ -449,10 +459,8 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
     // Allocate memory for new node
     struct article_node *z = (struct article_node*)malloc(sizeof(struct article_node));
 
-    article_init_node(z, strlen(article->id)+1, strlen(article->title)+1, strlen(article->author)+1);
+    article_init_node(z, article->id, article->file_offset);
     strcpy(z->article->id, article->id);
-    strcpy(z->article->author, article->author);
-    strcpy(z->article->title, article->title);
 
     //if root is null make z as root    free(article.abstract);
     if (strcmp((*root)->article->id, "null") == 0)
@@ -460,6 +468,7 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
         z->color = 'B';
         delete_article(*root);
         (*root) = z;
+        (*root)->size = 1;
     }
     else
     {
@@ -496,13 +505,8 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
         z->color = 'R';
 
         article_insert_fixup(root,z);
+        (*root)->size += 1;
         free(x);
-        //free(y);
-        //free(z->article->id);
-        //free(z->article->author);
-        //free(z->article->title);
-        //free(z->article);
-        //free(z);
     }
 
 }
@@ -534,4 +538,14 @@ void article_inorder(struct article_node *root)
     article_inorder(root->left);
     printf("%s ", root->article->id);
     article_inorder(root->right);
+}
+
+void article_inorder_list(struct article_node* root, char** list)
+{
+    int i = 0;
+    if (root == NULL)
+        return;
+    article_inorder_list(root->left, list);
+    sprintf(list[i], "%s", root->article->id);
+    article_inorder_list(root->right, list);
 }
