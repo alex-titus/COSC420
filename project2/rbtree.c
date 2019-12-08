@@ -45,6 +45,11 @@ void article_init_node(struct article_node *node, char* id, int offset){
   initArxivArticle(node->article, id, offset);
 }
 
+// void print_article(struct article_node* node, File* fp)
+// {
+//
+// }
+
 void delete_article(struct article_node* del)
 {
     free(del->article->id);
@@ -86,7 +91,7 @@ void word_init_node(struct word_node *node, char* word, struct arxivArticle* art
 
 void word_insert_fixup(struct word_node **root, struct word_node *z);
 void word_insert(struct word_node **root,struct word_node* z);
-void word_search(char* search_word, struct word_node* root, struct word_node* ret);
+struct word_node* word_search(char* search_word, struct word_node* root);
 
 void word_right_rotate(struct word_node **root,struct word_node *y);
 void word_left_rotate(struct word_node **root,struct word_node *x);
@@ -185,9 +190,9 @@ void word_insert(struct word_node **root, struct word_node* z)
     if (*root == NULL)
     {
         printf("this should only happen once\n");
-        (*root) = (struct word_node*)malloc(sizeof(struct word_node));
+        (*root) = malloc(sizeof(struct word_node));
         word_init_node((*root), z->word, z->sub_root->article);
-        z->color = 'B';
+        (*root)->color = 'B';
     }
     else
     {
@@ -295,28 +300,26 @@ void word_right_rotate(struct word_node **root,struct word_node *y)
     y->parent = x;
 }
 
-void word_search(char* search_word, struct word_node* root, struct word_node* ret)
+struct word_node* word_search(char* search_word, struct word_node* root)
 {
     if(root == NULL)
-        ret =  NULL;
-
-    if(strcmp(root->sub_root->article->id, "null"))
-        ret =  NULL;
+    {
+        printf("root is null");
+        return NULL;
+    }
 
     struct word_node* current = root;
     while(current != NULL)
     {
-        printf("Search Current: %s", current->word);
+        // printf("Search Current: %s\n", current->word);
         if(strcmp(current->word, search_word) == 0)
-        {
-            ret =  current;
-        }
+            return current;
         if(strcmp(search_word, current->word) < 0)
             current = current->left;
         else if(strcmp(search_word, current->word) > 0)
             current = current->right;
-        }
-    ret =  NULL;//if the loop exits without returning that means the data it's     looking for isn't in the tree
+    }
+    return NULL;//if the loop exits without returning that means the data it's     looking for isn't in the tree
 }
 
 void word_inorder(struct word_node *root)

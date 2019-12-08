@@ -80,7 +80,7 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
     // if(rank == num_nodes)
     //     ending_point = file_len;
     // printf("end %d, file len : %d\n",ending_point, file_len);
-    chunk[0] = starting_point + 1;
+    chunk[0] = starting_point;
     chunk[1] = ending_point + 1;
 }
 
@@ -133,7 +133,7 @@ void read_stopwords(struct stop_node* root, char* stopwords_file_name)
     free(line);
 }
 
-int metadataInsertion(struct word_node* root, char* meta_file)
+int metadataInsertion(struct word_node** root, char* meta_file)
 {
     MPI_Comm world = MPI_COMM_WORLD;
     int rank, world_size;
@@ -173,19 +173,16 @@ int metadataInsertion(struct word_node* root, char* meta_file)
 
     fseek(fp, chunk[0], SEEK_SET);
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
-        printf("Line: %s", line);
+        // printf("Line: %s", line);
         if (line[0] != '+'){
             int file_offset = ftell(fp);
             struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
             initArxivArticle(article, line, file_offset);
 
             //don't neccessarily to copy all of the lines, but it's not a super big deal
-            int err = getline(&line, &len, fp);
-            err = getline(&line, &len, fp);
-            err = getline(&line, &len, fp);
-
-            if(err)
-                printf("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            getline(&line, &len, fp);
+            getline(&line, &len, fp);
+            getline(&line, &len, fp);
 
             int i;
             int offset = 0;
@@ -219,7 +216,7 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                         // }else
                         // {
                         // printf("new %s, size = %d, article = %s\n", new_word->word, new_word->sub_root->size, new_word->sub_root->article->id);
-                        word_insert(&root, new_word);
+                        word_insert(root, new_word);
                         // printf("root: %s, %d\n", root->word, root->sub_root->size);
 
                         // article_inorder(root->sub_root);
@@ -237,7 +234,6 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                 offset = i;
             }
             //puts("\n\n\n");
-            //word_inorder(root);
             free(article->id);
             free(article);
         }
@@ -252,6 +248,7 @@ int metadataInsertion(struct word_node* root, char* meta_file)
     if (line){
         free(line);
     }
+    //word_inorder(*root);
     //exit(EXIT_SUCCESS);
     return 0;
 }
@@ -268,13 +265,15 @@ int main(int argc, char** argv)
 
 
     umask(0);
+
     struct word_node *cthulu_tree = NULL;
 
     printf("proccessing search index ...\n");
-    char meta_file[100] = "./arxiv/shortened-arxiv-metadata.txt\0";
-    metadataInsertion(cthulu_tree, meta_file);
+    char meta_file[100] = "./arxiv/long-shortened-arxiv-metadata.txt\0";
+    metadataInsertion(&cthulu_tree, meta_file);
+
     if(rank == 0)
-    printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
+        printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
     int done = 0;
     char* input = malloc(100 * sizeof(char));
     while(!done)
@@ -283,9 +282,10 @@ int main(int argc, char** argv)
             printf("Search: ");
             scanf("%s", input);
         }
+        int len = strlen(input)-1;
         MPI_Bcast(
             input,
-            strlen(input),
+            100,
             MPI_CHAR,
             0,
             world
@@ -295,17 +295,23 @@ int main(int argc, char** argv)
             done = 1;
             continue;
         }
+
         printf("Node #%d: Searching for %s\n",rank, input);
-        struct word_node* ret;
-        word_search(input, cthulu_tree, ret);
-        printf("return word%s\n", ret->word);
-        char** list = malloc(ret->sub_root->size * sizeof(char));
-        article_inorder_list(ret->sub_root, list);
-        int i;
-        for(i = 0; i < 10 ; i++)
-            printf("%s, ", list[i]);
-        //search_results
-        word_delete_tree(ret);
+        struct word_node* ret = word_search(input, cthulu_tree);
+        if(ret == NULL)
+            printf("No search results found\n");
+        else
+        {
+            char** list = malloc(ret->sub_root->size * sizeof(char*));
+            printf("Node %d found %d", rank, ret->sub_root->size);
+            article_inorder(ret->sub_root);
+            // article_inorder_list(ret->sub_root, list);
+            // int i;
+            // for(i = 0; i < 10 ; i++)
+            //     printf("%s, ", list[i]);
+            //search_results
+        }
+        //word_delete_tree(ret);
     }
     free(input);
     word_delete_tree(cthulu_tree);

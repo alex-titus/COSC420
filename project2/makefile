@@ -1,6 +1,6 @@
 #Make file for primes.c
 CC=mpicc
-CFLAGS= -lm -std=c99 -g
+CFLAGS= -lm -std=c99 -g -Wno-unused-result -Wno-maybe-uninitialized
 binaries=driver
 LDFLAGS=
 
