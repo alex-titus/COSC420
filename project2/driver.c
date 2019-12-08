@@ -183,9 +183,14 @@ int metadataInsertion(struct word_node* root, char* meta_file)
         printf("meta file not found\n");
         exit(EXIT_FAILURE);
     }
+    
+    struct stop_node* stop = NULL;
+	read_stopwords(stop, "./arxiv/stopwords");
+	stop_inorder(stop);
+    
     fseek(fp, chunk[0], SEEK_SET);
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
-        printf("Line: %s", line);
+        //printf("Line: %s", line);
         int idLength = strlen(line)+1;
         char *id = malloc(idLength * sizeof(char));
         if (line[0] != '+'){
@@ -219,23 +224,25 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                     char *insertWord = malloc((wordSize) * sizeof(char));
                     strncpy(insertWord, (line + offset), wordSize);
                     insertWord[wordSize-1] = '\0';
-
-                    struct word_node *new_word = (struct word_node*)malloc(sizeof(struct word_node));
-                    word_init_node(new_word, insertWord, article);
-
-                    article_insert(&new_word->sub_root, article);
-
-                    //printf("%s is the word\n", insertWord);
-                    //struct word_node* returney = word_search(insertWord, root);
-                    // if(returney != NULL){
-                    //     //printf("found word %s\n", returney->word);
-                    // }else
-                    // {
-                    word_insert(&root, new_word);
-                    printf("%s has %d articles\n", insertWord, new_word->sub_root->size);
-                    //printf("\ninorder:\n");
-                    // }
-                    free(insertWord);
+					if(stop_search(insertWord, &stop) == 0){
+						struct word_node *new_word = (struct word_node*)malloc(sizeof(struct word_node));
+						word_init_node(new_word, insertWord, article);
+						
+						article_insert(&new_word->sub_root, article);
+						//printf("%s is the word\n", insertWord);
+						//struct word_node* returney = word_search(insertWord, root);
+						// if(returney != NULL){
+						//     //printf("found word %s\n", returney->word);
+						// }else
+						// {
+						word_insert(&root, new_word);
+						//printf("%s has %d articles\n", insertWord, new_word->sub_root->size);
+						//printf("\ninorder:\n");
+						// }
+						free(insertWord);
+					}else{
+						printf("Stopword %s has been ignored\n", insertWord);
+					}
                 }
                 offset = i;
             }
