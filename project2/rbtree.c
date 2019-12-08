@@ -52,6 +52,28 @@ void delete_article(struct article_node* del)
     free(del);
 }
 
+void article_delete_tree(struct article_node* root)
+{
+    if(root != NULL)
+    {
+        article_delete_tree(root->left);
+        article_delete_tree(root->right);
+        delete_article(root);
+    }
+}
+
+void word_delete_tree(struct word_node* root)
+{
+    if(root != NULL)
+    {
+        word_delete_tree(root->left);
+        word_delete_tree(root->right);
+        free(root->word);
+        article_delete_tree(root->sub_root);
+        free(root);
+    }
+}
+
 void article_insert(struct article_node **root, struct arxivArticle* article);
 void word_init_node(struct word_node *node, char* word, struct arxivArticle* article){
   node->word = malloc(30 * sizeof(char));
@@ -158,13 +180,14 @@ void word_insert_fixup(struct word_node **root, struct word_node *z)
 
 void word_insert(struct word_node **root, struct word_node* z)
 {
-    printf("word insert\n");
+    // printf("word insert\n");
     //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
     {
         printf("this should only happen once\n");
+        (*root) = (struct word_node*)malloc(sizeof(struct word_node));
+        word_init_node((*root), z->word, z->sub_root->article);
         z->color = 'B';
-        (*root) = z;
     }
     else
     {
@@ -176,16 +199,18 @@ void word_insert(struct word_node **root, struct word_node* z)
         {
             //printf("x->article->id = %s\nz->article->id = %s \n", x->article->id, z->article->id);
             y = x;
+            // printf("x(current) = %s\n", x->word);
+            // printf("z(new) = %s\n", z->word);
             if (strcmp(z->word, x->word) < 0){
 
-                //printf("moving left\n");
+                // printf("moving left\n");
                 x = x->left;
             } else if (strcmp(z->word, x->word) > 0) {
-                //printf("moving right\n");
+                // printf("moving right\n");
                 x = x->right;
             }
             else {
-                printf("word already in tree, %s, %s\n", z->word, x->word);
+                // printf("word already in tree, %s, %s\n", z->word, x->word);
                 article_insert(&x->sub_root, z->sub_root->article);
                 // delete_article(z->sub_root);
                 // free(z->word);
@@ -460,7 +485,7 @@ void article_insert_fixup(struct article_node **root, struct article_node *z)
 // Utility function to article_insert newly node in RedBlack tree
 void article_insert(struct article_node **root, struct arxivArticle* article)
 {
-    printf("article insert\n");
+    // printf("article insert\n");
     // Allocate memory for new node
     struct article_node *z = (struct article_node*)malloc(sizeof(struct article_node));
 
@@ -496,7 +521,7 @@ void article_insert(struct article_node **root, struct arxivArticle* article)
             }
             else {
                 delete_article(z);
-                printf("duplicate, returning\n");
+                // printf("duplicate, returning\n");
                 return;
             }
         }
