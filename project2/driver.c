@@ -54,7 +54,7 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
             //printf("\tNode #%d s reading char %c\n", rank, c);
         }
         MPI_File_get_position(*file, &starting_point);
-        MPI_File_seek(*file, 1, MPI_SEEK_CUR);
+        //MPI_File_seek(*file, starting_point+ 1, MPI_SEEK_SET);
         //    printf("\n\noffset before seek is %d\n", starting_point);
         //MPI_File_get_position(*file, &starting_point);
         //printf("offset after seek is %d\n\n", starting_point);
@@ -74,14 +74,14 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
         nbytes = MPI_File_read(*file, &c, 1, MPI_CHAR, &status);
         //printf("\tNode #%d e reading char %c\n", rank, c);
     }
-    MPI_File_seek(*file, 1, MPI_SEEK_CUR);
+    //MPI_File_seek(*file, 1, MPI_SEEK_CUR);
     MPI_File_get_position(*file, &ending_point);
 
     // if(rank == num_nodes)
     //     ending_point = file_len;
     // printf("end %d, file len : %d\n",ending_point, file_len);
-    chunk[0] = starting_point;
-    chunk[1] = ending_point;
+    chunk[0] = starting_point + 1;
+    chunk[1] = ending_point + 1;
 }
 
 // MPI_Status status;
@@ -110,6 +110,45 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
 //     //int word_len = strlen(word2);
 //
 //     word_num++;
+
+void read_stopwords(struct stop_node* root, char* stopwords_file_name)
+{
+    MPI_Comm world = MPI_COMM_WORLD;
+    int rank, world_size;
+    MPI_Comm_rank(world, &rank);
+    MPI_Comm_size(world, &world_size);
+
+    MPI_File mpi_words_file;
+    MPI_File_open(
+        world,
+        stopwords_file_name,
+        MPI_MODE_RDONLY,
+        MPI_INFO_NULL,
+        &mpi_words_file
+    );
+
+    //FILE* test = fopen("test_offset.txt", "r");
+    int chunk[2];
+    find_offset(rank, world_size, &mpi_words_file, chunk);
+    //printf("node #%d start %d | end %d\n", rank, chunk[0], chunk[1]);
+
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    fp = fopen(stopwords_file_name, "r");
+    //fp = fopen("./arxiv/arxiv-metadata.txt", "r");
+
+    if (fp == NULL){
+        printf("Stopwords file not found\n");
+        exit(EXIT_FAILURE);
+    }
+    fseek(fp, chunk[0], SEEK_SET);
+    while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
+        stop_insert(&root, line);
+    }
+}
 
 int metadataInsertion(struct word_node* root, char* meta_file)
 {
@@ -141,11 +180,12 @@ int metadataInsertion(struct word_node* root, char* meta_file)
     //fp = fopen("./arxiv/arxiv-metadata.txt", "r");
 
     if (fp == NULL){
-        printf("File not found\n");
+        printf("meta file not found\n");
         exit(EXIT_FAILURE);
     }
     fseek(fp, chunk[0], SEEK_SET);
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
+        printf("Line: %s", line);
         int idLength = strlen(line)+1;
         char *id = malloc(idLength * sizeof(char));
         if (line[0] != '+'){
@@ -244,7 +284,6 @@ int main(int argc, char** argv)
         if(rank == 0){
             printf("Search: ");
             scanf("%s", input);
-            printf("%s\n", input);
         }
         MPI_Bcast(
             input,
@@ -252,10 +291,19 @@ int main(int argc, char** argv)
             MPI_CHAR,
             0,
             world);
-            struct word_node* ret = word_search(input, cthulu_tree);
-
+        printf("Node #%d: Searching for %s\n",rank, input);
+        struct word_node* ret;
+        word_search(input, cthulu_tree, ret);
+        printf("return word%s\n", ret->word);
+        char** list = malloc(ret->sub_root->size * sizeof(char));
+        article_inorder_list(ret->sub_root, list);
+        int i;
+        for(i = 0; i < 10 ; i++)
+            printf("%s, ", list[i]);
+        if(strcmp(input, "-1") == 0)
+            done = 1;
             //search_results
-        }
-        MPI_Finalize();
-        return 0;
     }
+    MPI_Finalize();
+    return 0;
+}

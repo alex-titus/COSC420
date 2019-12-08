@@ -64,7 +64,7 @@ void word_init_node(struct word_node *node, char* word, struct arxivArticle* art
 
 void word_insert_fixup(struct word_node **root, struct word_node *z);
 void word_insert(struct word_node **root,struct word_node* z);
-struct word_node* word_search(char* search_word, struct word_node* root);
+void word_search(char* search_word, struct word_node* root, struct word_node* ret);
 
 void word_right_rotate(struct word_node **root,struct word_node *y);
 void word_left_rotate(struct word_node **root,struct word_node *x);
@@ -267,27 +267,28 @@ void word_right_rotate(struct word_node **root,struct word_node *y)
     y->parent = x;
 }
 
-struct word_node* word_search(char* search_word, struct word_node* root)
+void word_search(char* search_word, struct word_node* root, struct word_node* ret)
 {
     if(root == NULL)
-        return NULL;
+        ret =  NULL;
 
     if(strcmp(root->sub_root->article->id, "null"))
-        return NULL;
+        ret =  NULL;
 
     struct word_node* current = root;
     while(current != NULL)
     {
+        printf("Search Current: %s", current->word);
         if(strcmp(current->word, search_word) == 0)
         {
-            return current;
+            ret =  current;
         }
         if(strcmp(search_word, current->word) < 0)
             current = current->left;
         else if(strcmp(search_word, current->word) > 0)
             current = current->right;
         }
-    return NULL;//if the loop exits without returning that means the data it's     looking for isn't in the tree
+    ret =  NULL;//if the loop exits without returning that means the data it's     looking for isn't in the tree
 }
 
 void word_inorder(struct word_node *root)
@@ -570,7 +571,7 @@ void stop_init_node(struct stop_node *node, char* stop)
 void stop_left_rotate(struct stop_node **root,struct stop_node *x)
 {
     //y stored pointer of right child of x
-    struct node *y = x->right;
+    struct stop_node *y = x->right;
 
     //store y's left subtree's pointer as x's right child
     x->right = y->left;
@@ -602,7 +603,7 @@ void stop_left_rotate(struct stop_node **root,struct stop_node *x)
 // Right Rotation (Similar to stop_left_rotate)
 void stop_right_rotate(struct stop_node **root,struct stop_node *y)
 {
-    struct node *x = y->left;
+    struct stop_node *x = y->left;
     y->left = x->right;
     if (x->right != NULL)
         x->right->parent = y;
@@ -622,7 +623,7 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
     // iterate until z is not the root and z's parent color is red
     while (z != *root && z->parent->color == 'R')
     {
-        struct node *y;
+        struct stop_node *y;
 
         // Find uncle and store uncle in y
         if (z->parent == z->parent->parent->left)
@@ -715,8 +716,8 @@ void stop_insert(struct stop_node **root, char* data)
     }
     else
     {
-        struct node *y = NULL;
-        struct node *x = (*root);
+        struct stop_node *y = NULL;
+        struct stop_node *x = (*root);
 
         // Follow standard BST insert steps to first insert the node
         while (x != NULL)
@@ -728,7 +729,7 @@ void stop_insert(struct stop_node **root, char* data)
                 x = x->right;
         }
         z->parent = y;
-        if (strcmp(z-stop, x->stop) > 0)
+        if (strcmp(z->stop, x->stop) > 0)
             y->right = z;
         else
             y->left = z;
@@ -741,11 +742,11 @@ void stop_insert(struct stop_node **root, char* data)
 }
 
 // A utility function to traverse Red-Black tree in stop_inorder fashion
-void stop_inorder(struct node *root)
+void stop_inorder(struct stop_node *root)
 {
     if (root == NULL)
         return;
     stop_inorder(root->left);
-    printf("%d ", root->data);
+    printf("%d ", root->stop);
     stop_inorder(root->right);
 }
