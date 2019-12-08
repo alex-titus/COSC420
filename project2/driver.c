@@ -228,8 +228,10 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                     // }else
                     // {
                     printf("new %s, size = %d, article = %s\n", new_word->word, new_word->sub_root->size, new_word->sub_root->article->id);
-                    printf("root: %s, %d\n", root->word, root->sub_root->size);
+                    if(root != NULL)
+                        printf("root: %s\n", root->word);
                     word_insert(&root, new_word);
+                    printf("root: %s, %d\n", root->word, root->sub_root->size);
 
                     article_inorder(root->sub_root);
                     //sleep(10);
@@ -238,8 +240,8 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                     // }
                     free(insertWord);
                     delete_article(new_word->sub_root);
-                    free(new_word->word);
-                    free(new_word);
+                    //free(new_word->word);
+                    //free(new_word);
                     sleep(2);
                 }
                 offset = i;
