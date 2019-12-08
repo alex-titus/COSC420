@@ -269,7 +269,7 @@ int main(int argc, char** argv)
     struct word_node *cthulu_tree = NULL;
 
     printf("proccessing search index ...\n");
-    char meta_file[100] = "./arxiv/long-shortened-arxiv-metadata.txt\0";
+    char meta_file[100] = "./arxiv/shortened-arxiv-metadata.txt\0";
     metadataInsertion(&cthulu_tree, meta_file);
 
     if(rank == 0)
