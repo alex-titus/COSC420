@@ -16,13 +16,6 @@
 // * filter the subgraphs
 //  pagerank
 
-#define NB_ELEMS 10
-
-int convIntToStr(char * str, int x){
-    sprintf(str, "%d", x);
-    return (strlen(str));
-}
-
 void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
 {//sets the offset of file to where the node should start
     //and returns the length of how many bytes it should read
@@ -111,7 +104,7 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
 //
 //     word_num++;
 
-void read_stopwords(struct stop_node* root, char* stopwords_file_name)
+void read_stopwords(struct stop_node** root, char* stopwords_file_name)
 {
     FILE * fp;
     char * line = NULL;
@@ -119,7 +112,6 @@ void read_stopwords(struct stop_node* root, char* stopwords_file_name)
     ssize_t read;
 
     fp = fopen(stopwords_file_name, "r");
-    //fp = fopen("./arxiv/arxiv-metadata.txt", "r");
 
     if (fp == NULL){
         printf("Stopwords file not found\n");
@@ -127,7 +119,7 @@ void read_stopwords(struct stop_node* root, char* stopwords_file_name)
     }
 
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp)) {
-        stop_insert(&root, line);
+        stop_insert(root, line);
     }
 
     free(line);
@@ -167,9 +159,10 @@ int metadataInsertion(struct word_node** root, char* meta_file)
         exit(EXIT_FAILURE);
     }
 
-    struct stop_node* stop = NULL;
-    read_stopwords(stop, "./arxiv/stopwords");
-    stop_inorder(stop);
+    struct stop_node* stop;
+    read_stopwords(&stop, "./arxiv/stopwords");
+    //printf("Printing stopwords tree\n");
+    //stop_inorder(stop);
 
     fseek(fp, chunk[0], SEEK_SET);
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
@@ -227,8 +220,6 @@ int metadataInsertion(struct word_node** root, char* meta_file)
                         // free(new_word->word);
                         // free(new_word);
                         //sleep(1);
-                    }else{
-                        printf("Stopword %s has been ignored\n", insertWord);
                     }
                 }
                 offset = i;
@@ -262,13 +253,14 @@ int main(int argc, char** argv)
     int rank, world_size;
     MPI_Comm_rank(world, &rank);
     MPI_Comm_size(world, &world_size);
+    MPI_Status status;
 
 
     umask(0);
 
     struct word_node *cthulu_tree = NULL;
 
-    printf("proccessing search index ...\n");
+    //printf("proccessing search index ...\n");
     char meta_file[100] = "./arxiv/shortened-arxiv-metadata.txt\0";
     metadataInsertion(&cthulu_tree, meta_file);
 
@@ -281,8 +273,17 @@ int main(int argc, char** argv)
         if(rank == 0){
             printf("Search: ");
             scanf("%s", input);
+            int i;
+            for(i = 0; i < world_size; i++){
+              MPI_Send(input, 100, MPI_CHAR, i, 0, world);
+            }
+            MPI_Barrier(world);
+        } else {
+          MPI_Recv(input, 100, MPI_CHAR, 0, 0, world, &status);
+          MPI_Barrier(world);
         }
-        int len = strlen(input)-1;
+
+        /*
         MPI_Bcast(
             input,
             100,
@@ -290,6 +291,7 @@ int main(int argc, char** argv)
             0,
             world
         );
+        */
         if(strcmp(input, "-1") == 0)
         {
             done = 1;

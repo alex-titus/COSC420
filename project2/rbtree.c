@@ -585,6 +585,7 @@ void article_inorder_list(struct article_node* root, char** list)
 }
 
 //====================================== STOP TREE ===================================
+
 struct stop_node
 {
     char* stop;
@@ -594,72 +595,27 @@ struct stop_node
 
 void stop_init_node(struct stop_node *node, char* stop)
 {
-	node->stop = malloc((strlen(stop)+1) * sizeof(char));
+	node->stop = malloc(30 * sizeof(char));
+  stop[strlen(stop)-1] = '\0';
 	strcpy(node->stop, stop);
 	node->left = node->right = node->parent = NULL;
 }
+void stop_insert_fixup(struct stop_node**, struct stop_node*);
+void stop_left_rotate(struct stop_node**,struct stop_node*);
+void stop_insert(struct stop_node**, char*);
+void stop_right_rotate(struct stop_node** ,struct stop_node*);
+void stop_inorder(struct stop_node*);
+int stop_search(char*, struct stop_node**);
 
-
-// Left Rotation
-void stop_left_rotate(struct stop_node **root,struct stop_node *x)
-{
-    //y stored pointer of right child of x
-    struct stop_node *y = x->right;
-
-    //store y's left subtree's pointer as x's right child
-    x->right = y->left;
-
-    //update parent pointer of x's right
-    if (x->right != NULL)
-        x->right->parent = x;
-
-    //update y's parent pointer
-    y->parent = x->parent;
-
-    // if x's parent is null make y as root of tree
-    if (x->parent == NULL)
-        (*root) = y;
-
-    // store y at the place of x
-    else if (x == x->parent->left)
-        x->parent->left = y;
-    else    x->parent->right = y;
-
-    // make x as left child of y
-    y->left = x;
-
-    //update parent pointer of x
-    x->parent = y;
-}
-
-
-// Right Rotation (Similar to stop_left_rotate)
-void stop_right_rotate(struct stop_node **root,struct stop_node *y)
-{
-    struct stop_node *x = y->left;
-    y->left = x->right;
-    if (x->right != NULL)
-        x->right->parent = y;
-    x->parent =y->parent;
-    if (x->parent == NULL)
-        (*root) = x;
-    else if (y == y->parent->left)
-        y->parent->left = x;
-    else y->parent->right = x;
-    x->right = y;
-    y->parent = x;
-}
-
-// Utility function to fixup the Red-Black tree after standard BST insertion
-void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
+void stop_insert_fixup(struct stop_node **root, struct stop_node *z)
 {
     // iterate until z is not the root and z's parent color is red
-    while (z != *root && z->parent->color == 'R')
+    while (z != *root && z != (*root)->left && z != (*root)->right && z->parent->color == 'R')
     {
         struct stop_node *y;
 
         // Find uncle and store uncle in y
-        if (z->parent == z->parent->parent->left)
+        if (z->parent && z->parent->parent && z->parent == z->parent->parent->left)
             y = z->parent->parent->right;
         else
             y = z->parent->parent->left;
@@ -668,7 +624,9 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
         // (i)  Change color of parent and uncle as BLACK
         // (ii) Change color of grandparent as RED
         // (iii) Move z to grandparent
-        if (y->color == 'R')
+        if (!y)
+            z = z->parent->parent;
+        else if (y->color == 'R')
         {
             y->color = 'B';
             z->parent->color = 'B';
@@ -695,7 +653,7 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
             // (i)  Swap color of current node  and grandparent
             // (ii) Left Rotate Parent
             // (iii) Right Rotate Grand Parent
-            if (z->parent == z->parent->parent->left &&
+            if (z->parent && z->parent->parent && z->parent == z->parent->parent->left &&
                 z == z->parent->right)
             {
                 char ch = z->color ;
@@ -708,7 +666,8 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
             // Right-Right (RR) case, do following
             // (i)  Swap color of parent and grandparent
             // (ii) Left Rotate Grandparent
-            if (z->parent == z->parent->parent->right &&
+            if (z->parent && z->parent->parent &&
+                z->parent == z->parent->parent->right &&
                 z == z->parent->right)
             {
                 char ch = z->parent->color ;
@@ -721,7 +680,7 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
             // (i)  Swap color of current node  and grandparent
             // (ii) Right Rotate Parent
             // (iii) Left Rotate Grand Parent
-            if (z->parent == z->parent->parent->right &&
+            if (z->parent && z->parent->parent && z->parent == z->parent->parent->right &&
                 z == z->parent->left)
             {
                 char ch = z->color ;
@@ -735,57 +694,123 @@ void stop_insert_fixup(struct stop_node **root,struct stop_node *z)
     (*root)->color = 'B'; //keep root always black
 }
 
-// Utility function to insert newly node in RedBlack tree
-void stop_insert(struct stop_node **root, char* data)
+void stop_insert(struct stop_node **root, char* stop)
 {
-    // Allocate memory for new node
+    // printf("stop insert\n");
+    //if root is null make z as root    free(article.abstract);
     struct stop_node *z = (struct stop_node*)malloc(sizeof(struct stop_node));
-	stop_init_node(z, data);
-     //if root is null make z as root
+	  stop_init_node(z, stop);
     if (*root == NULL)
     {
-        z->color = 'B';
-        (*root) = z;
+        (*root) = malloc(sizeof(struct stop_node));
+        stop_init_node((*root), stop);
+        (*root)->color = 'B';
     }
     else
     {
         struct stop_node *y = NULL;
         struct stop_node *x = (*root);
 
-        // Follow standard BST insert steps to first insert the node
+        // Follow standard BST article_insert steps to first article_insert the node
         while (x != NULL)
         {
+            //printf("x->article->id = %s\nz->article->id = %s \n", x->article->id, z->article->id);
             y = x;
-            if (strcmp(z->stop, x->stop) < 0)
+            // printf("x(current) = %s\n", x->stop);
+            // printf("z(new) = %s\n", stop);
+            if (strcmp(stop, x->stop) < 0){
+
+                // printf("moving left\n");
                 x = x->left;
-            else if (strcmp(z->stop, x->stop) > 0)
+            } else if (strcmp(stop, x->stop) > 0) {
+                // printf("moving right\n");
                 x = x->right;
+            }
         }
         z->parent = y;
-		if( y == NULL)
-			*root = z;
-        else if (strcmp(z->stop, y->stop) < 0)
-            y->right = z;
-        else if (strcmp(z->stop, y->stop) > 0)
+        if( y == NULL)
+            *root = z;
+        else if (strcmp(stop, y->stop) < 0){
             y->left = z;
+        } else if (strcmp(stop, y->stop) > 0){
+            y->right = z;
+        }
         z->color = 'R';
 
-        // call stop_insert_fixup to fix reb-black tree's property if it
-        // is voilated due to insertion.
         stop_insert_fixup(root,z);
-		free(x);
+        free(x);
+        //free(y);
+        //free(stop);
+        //free(z->sub_root);
+        //free(z);
     }
+
 }
 
-// A utility function to traverse Red-Black tree in stop_inorder fashion
+// Left Rotation
+void stop_left_rotate(struct stop_node **root,struct stop_node *x)
+{
+    if (x == NULL || x->right == NULL)
+        return;
+    //y stored pointer of right child of x
+    struct stop_node *y = x->right;
+
+    //store y's left subtree's pointer as x's right child
+    x->right = y->left;
+
+    //update parent pointer of x's right
+    if (x->right != NULL)
+        x->right->parent = x;
+
+    //update y's parent pointer
+    y->parent = x->parent;
+
+    // if x's parent is null make y as root of tree
+    if (x->parent == NULL)
+        (*root) = y;
+
+    // store y at the place of x
+    else if (x == x->parent->left)
+        x->parent->left = y;
+    else
+        x->parent->right = y;
+
+    // make x as left child of y
+    y->left = x;
+
+    //update parent pointer of x
+    x->parent = y;
+}
+
+// Right Rotation (Similar to article_left_rotate)
+void stop_right_rotate(struct stop_node **root,struct stop_node *y)
+{
+    if (!y || !y->left)
+        return ;
+    struct stop_node *x = y->left;
+    y->left = x->right;
+    if (x->right != NULL)
+        x->right->parent = y;
+    x->parent =y->parent;
+    if (x->parent == NULL)
+        (*root) = x;
+    else if (y == y->parent->left)
+        y->parent->left = x;
+    else y->parent->right = x;
+    x->right = y;
+    y->parent = x;
+}
+
 void stop_inorder(struct stop_node *root)
 {
+    //printf("%s ", root);
     if (root == NULL)
         return;
     stop_inorder(root->left);
-    printf("%s \n", root->stop);
+    printf("%s ", root->stop);
     stop_inorder(root->right);
 }
+
 int stop_search(char* search_id, struct stop_node** root)
 {
     struct stop_node* current = *root;
