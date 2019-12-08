@@ -183,22 +183,18 @@ int metadataInsertion(struct word_node* root, char* meta_file)
         printf("meta file not found\n");
         exit(EXIT_FAILURE);
     }
-    
+
     struct stop_node* stop = NULL;
 	read_stopwords(stop, "./arxiv/stopwords");
 	stop_inorder(stop);
-    
+
     fseek(fp, chunk[0], SEEK_SET);
     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp) < chunk[1]) {
-        //printf("Line: %s", line);
-        int idLength = strlen(line)+1;
-        char *id = malloc(idLength * sizeof(char));
+        printf("Line: %s", line);
         if (line[0] != '+'){
             int file_offset = ftell(fp);
-            strcpy(id, line);
-            id[idLength-1] = '\0';
             struct arxivArticle* article = malloc(sizeof(struct arxivArticle));
-            initArxivArticle(article, id, file_offset);
+            initArxivArticle(article, line, file_offset);
 
             //don't neccessarily to copy all of the lines, but it's not a super big deal
             getline(&line, &len, fp);
@@ -218,28 +214,38 @@ int metadataInsertion(struct word_node* root, char* meta_file)
                 }
                 int wordSize = i-offset;
 
-                if( wordSize > 2)
+                if( wordSize > 2)//including the null terminator
                 {
                     //printf("\nwordsize: %d, ", wordSize);
                     char *insertWord = malloc((wordSize) * sizeof(char));
                     strncpy(insertWord, (line + offset), wordSize);
                     insertWord[wordSize-1] = '\0';
 					if(stop_search(insertWord, &stop) == 0){
-						struct word_node *new_word = (struct word_node*)malloc(sizeof(struct word_node));
-						word_init_node(new_word, insertWord, article);
-						
-						article_insert(&new_word->sub_root, article);
-						//printf("%s is the word\n", insertWord);
-						//struct word_node* returney = word_search(insertWord, root);
-						// if(returney != NULL){
-						//     //printf("found word %s\n", returney->word);
-						// }else
-						// {
-						word_insert(&root, new_word);
-						//printf("%s has %d articles\n", insertWord, new_word->sub_root->size);
-						//printf("\ninorder:\n");
-						// }
-						free(insertWord);
+            printf("new word %s\n", insertWord);
+            struct word_node *new_word = (struct word_node*)malloc(sizeof(struct word_node));
+            word_init_node(new_word, insertWord, article);
+            //article_insert(&new_word->sub_root, article);
+
+            //printf("%s is the word\n", insertWord);
+            //struct word_node* returney = word_search(insertWord, root);
+            // if(returney != NULL){
+            //     //printf("found word %s\n", returney->word);
+            // }else
+            // {
+            printf("new %s, size = %d, article = %s\n", new_word->word, new_word->sub_root->size, new_word->sub_root->article->id);
+            printf("root: %s, %d\n", root->word, root->sub_root->size);
+            word_insert(&root, new_word);
+
+            article_inorder(root->sub_root);
+            //sleep(10);
+            printf("%s has %d articles\n", new_word->word, new_word->sub_root->size);
+            printf("\n=======================\n");
+            // }
+            free(insertWord);
+            delete_article(new_word->sub_root);
+            free(new_word->word);
+            free(new_word);
+            sleep(2);
 					}else{
 						printf("Stopword %s has been ignored\n", insertWord);
 					}
@@ -250,9 +256,8 @@ int metadataInsertion(struct word_node* root, char* meta_file)
             //word_inorder(root);
             free(article->id);
             free(article);
-            //sleep(1);
-        }
-        free(id);
+        }else
+            return;
 
     }
 
