@@ -3,6 +3,7 @@ in_file = "arxiv-citations.txt"
 index_file = "indexed-citations.dat"
 article_ids_file = "article_ids.dat"
 hits_scores_file = "hits_scores.dab"
+combined_file = "combined_file.dat"
 
 article_indexes = {}
 lookup_later = []
@@ -46,6 +47,7 @@ with open(in_file, 'r') as citations:
 print(f"num articles {len(article_indexes)}, {i}")
 auth_scores = {}
 hub_scores = {}
+
 with open(index_file, 'w+') as outf:
     for article, citations in citation_dict.items():
         if citations:
@@ -56,6 +58,7 @@ with open(index_file, 'w+') as outf:
                     auth_scores[cite] += 1
                 except KeyError:
                     auth_scores[cite] = 1
+
 with open(hits_scores_file, 'w+') as outf:
     for name, id in article_indexes.items():
         try:
@@ -72,4 +75,13 @@ with open(hits_scores_file, 'w+') as outf:
 with open(article_ids_file, 'w+') as outf:
     for article, id in article_indexes.items():
         outf.write(f"{article}:{id}\n")
+
+with open(combined_file, 'w+') as outf:
+    for article, id in zip(article_indexes.items(), citation_dict.items()):
+        if len(id[1]) == 0:
+            new_line = (f"{id[0]}:{article[0]}:0\n")
+        else:
+            new_line = (f"{id[0]}:{article[0]}:{id[1]}\n")
+        outf.write(new_line)
+        #if new_line[-3] == '['
 #print(citation_dict)
