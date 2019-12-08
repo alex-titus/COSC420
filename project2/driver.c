@@ -273,7 +273,7 @@ int main(int argc, char** argv)
         if(rank == 0){
             printf("Search: ");
             scanf("%s", input);
-            int i;
+          }/*int i;
             for(i = 0; i < world_size; i++){
               MPI_Send(input, 100, MPI_CHAR, i, 0, world);
             }
@@ -282,8 +282,8 @@ int main(int argc, char** argv)
           MPI_Recv(input, 100, MPI_CHAR, 0, 0, world, &status);
           MPI_Barrier(world);
         }
+        */
 
-        /*
         MPI_Bcast(
             input,
             100,
@@ -291,7 +291,7 @@ int main(int argc, char** argv)
             0,
             world
         );
-        */
+
         if(strcmp(input, "-1") == 0)
         {
             done = 1;
