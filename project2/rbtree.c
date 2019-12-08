@@ -36,7 +36,6 @@ void initArxivArticle(struct arxivArticle *article, char* id, int offset){
   strcpy(article->id, id);
   article->id[strlen(id)] = '\0';
   article->file_offset = offset;
-  //strcpy(article->id, "null");
 }
 
 void article_init_node(struct article_node *node, char* id, int offset){
@@ -731,19 +730,22 @@ void stop_insert(struct stop_node **root, char* data)
             y = x;
             if (strcmp(z->stop, x->stop) < 0)
                 x = x->left;
-            else
+            else if (strcmp(z->stop, x->stop) > 0)
                 x = x->right;
         }
         z->parent = y;
-        if (strcmp(z->stop, x->stop) > 0)
+		if( y == NULL)
+			*root = z;
+        else if (strcmp(z->stop, y->stop) < 0)
             y->right = z;
-        else
+        else if (strcmp(z->stop, y->stop) > 0)
             y->left = z;
         z->color = 'R';
 
         // call stop_insert_fixup to fix reb-black tree's property if it
         // is voilated due to insertion.
         stop_insert_fixup(root,z);
+		free(x);
     }
 }
 
@@ -753,6 +755,22 @@ void stop_inorder(struct stop_node *root)
     if (root == NULL)
         return;
     stop_inorder(root->left);
-    printf("%s ", root->stop);
+    printf("%s \n", root->stop);
     stop_inorder(root->right);
+}
+int stop_search(char* search_id, struct stop_node** root)
+{
+    struct stop_node* current = *root;
+    while(current != NULL)
+    {
+        if(strcmp(current->stop, search_id) == 0)
+        {
+            return 1;
+        }
+        if(strcmp(search_id, current->stop) < 0)
+            current = current->left;
+        else if(strcmp(search_id, current->stop) > 0)
+            current = current->right;
+        }
+    return 0;
 }
