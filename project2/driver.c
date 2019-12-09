@@ -159,7 +159,7 @@ int metadataInsertion(struct word_node** root, char* meta_file)
         exit(EXIT_FAILURE);
     }
 
-    struct stop_node* stop;
+    struct stop_node* stop = NULL;
     read_stopwords(&stop, "./arxiv/stopwords");
     //printf("Printing stopwords tree\n");
     //stop_inorder(stop);
@@ -228,8 +228,8 @@ int metadataInsertion(struct word_node** root, char* meta_file)
             free(article->id);
             free(article);
         }
-         // else
-         // sleep(5);
+        // else
+        // sleep(5);
 
     }
 
@@ -244,6 +244,12 @@ int metadataInsertion(struct word_node** root, char* meta_file)
     return 0;
 }
 
+int check_search_return(struct word_node *ret){
+    if (ret == NULL)
+    return 0;
+    else
+    return ret->sub_root->size;
+}
 
 /* Drier program to test above function*/
 int main(int argc, char** argv)
@@ -265,7 +271,7 @@ int main(int argc, char** argv)
     metadataInsertion(&cthulu_tree, meta_file);
 
     if(rank == 0)
-        printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
+    printf("Welcome to the muthah fukin game beech \n -1 to quit\n");
     int done = 0;
     char* input = malloc(100 * sizeof(char));
     while(!done)
@@ -273,24 +279,24 @@ int main(int argc, char** argv)
         if(rank == 0){
             printf("Search: ");
             scanf("%s", input);
-          }/*int i;
+            int i;
             for(i = 0; i < world_size; i++){
-              MPI_Send(input, 100, MPI_CHAR, i, 0, world);
+                MPI_Send(input, 100, MPI_CHAR, i, 0, world);
             }
             MPI_Barrier(world);
         } else {
-          MPI_Recv(input, 100, MPI_CHAR, 0, 0, world, &status);
-          MPI_Barrier(world);
+            MPI_Recv(input, 100, MPI_CHAR, 0, 0, world, &status);
+            MPI_Barrier(world);
         }
-        */
 
+        /*
         MPI_Bcast(
-            input,
-            100,
-            MPI_CHAR,
-            0,
-            world
-        );
+        input,
+        100,
+        MPI_CHAR,
+        0,
+        world
+    );*/
 
         if(strcmp(input, "-1") == 0)
         {
@@ -298,22 +304,83 @@ int main(int argc, char** argv)
             continue;
         }
 
+        int* global_sum = malloc(world_size * sizeof(int));
+        int* displs = calloc(world_size, sizeof(int));
         printf("Node #%d: Searching for %s\n",rank, input);
         struct word_node* ret = word_search(input, cthulu_tree);
-        if(ret == NULL)
-            printf("No search results found\n");
-        else
-        {
-            char** list = malloc(ret->sub_root->size * sizeof(char*));
-            printf("Node %d found %d", rank, ret->sub_root->size);
-            article_inorder(ret->sub_root);
-            // article_inorder_list(ret->sub_root, list);
-            // int i;
-            // for(i = 0; i < 10 ; i++)
-            //     printf("%s, ", list[i]);
-            //search_results
+
+        int search_return_value = check_search_return(ret);
+        char *local_list;
+        int *word_length;
+        int list_length;
+        MPI_Gather(&search_return_value,
+            1,
+            MPI_INT,
+            global_sum,
+            1,
+            MPI_INT,
+            0,
+            world);
+        if (ret == NULL){
+            local_list = NULL;
+        } else {
+            int i = 0;
+            local_list = malloc(500 * ret->sub_root->size * sizeof(char));
+            local_list[0] = '\0';
+            article_inorder_list(ret->sub_root, local_list);
+            list_length = strlen(local_list);
         }
-        //word_delete_tree(ret);
+            int article_count = 0;
+            displs[0] = 0;
+            int i;
+            for (i = 1; i < world_size; i++){
+                displs[i] = displs[i-1] + strlen(local_list);
+                article_count += global_sum[i];
+            }
+        printf("node %d's local list is %s\n", rank, local_list);
+        if (rank == 0) { printf("There are a total of %d articles\n", article_count); }
+        char* list = malloc(50 * article_count * sizeof(char));
+        int totlen = 0;
+
+        const int root = 0;
+        int *recvcounts = NULL;
+
+        /* Only root has the received data */
+        if (rank == root)
+            recvcounts = malloc( world_size * sizeof(int)) ;
+
+        if (rank == root) {
+            displs = malloc( world_size * sizeof(int) );
+
+            displs[0] = 0;
+            totlen += recvcounts[0]+1;
+
+            for (int i=1; i<world_size; i++) {
+                totlen += recvcounts[i]+1;   /* plus one for space or \0 after words */
+                displs[i] = displs[i-1] + recvcounts[i-1] + 1;
+            }
+
+            /* allocate string, pre-fill with spaces and null terminator */
+            list = malloc(totlen * sizeof(char));
+            for (int i=0; i<totlen-1; i++){
+                list[i] = ' ';
+                list[totlen-1] = '\0';
+            }
+        }
+        MPI_Gatherv(
+            local_list,
+            list_length,
+            MPI_CHAR,
+            list,
+            recvcounts,
+            displs,
+            MPI_CHAR,
+            0,
+            world
+        );
+        if (rank == 0){
+            printf("%s\n", list);
+        }
     }
     free(input);
     word_delete_tree(cthulu_tree);

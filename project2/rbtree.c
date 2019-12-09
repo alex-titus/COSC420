@@ -81,7 +81,8 @@ void word_delete_tree(struct word_node* root)
 
 void article_insert(struct article_node **root, struct arxivArticle* article);
 void word_init_node(struct word_node *node, char* word, struct arxivArticle* article){
-  node->word = malloc(30 * sizeof(char));
+  node->word = malloc(strlen(word)+1 * sizeof(char));
+  word[strlen(word)] = '\0';
   strcpy(node->word, word);
   node->sub_root = malloc(sizeof(struct article_node));
   article_init_node(node->sub_root, article->id, article->file_offset);
@@ -574,13 +575,12 @@ void article_inorder(struct article_node *root)
     article_inorder(root->right);
 }
 
-void article_inorder_list(struct article_node* root, char** list)
+void article_inorder_list(struct article_node* root, char* list)
 {
-    int i = 0;
     if (root == NULL)
         return;
     article_inorder_list(root->left, list);
-    sprintf(list[i], "%s", root->article->id);
+    strcat(list, root->article->id);
     article_inorder_list(root->right, list);
 }
 

@@ -3,8 +3,8 @@
 # File: myproject.sh
 
 #SBATCH --job-name=thiccums
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=2
+#SBATCH --nodes=10
+#SBATCH --ntasks-per-node=4
 #SBATCH --mem=10gb
 #SBATCH --time=24:00:00    # Time limit in the form hh:mm:ss
 #SBATCH --output=out/%j.log
