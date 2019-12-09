@@ -575,13 +575,15 @@ void article_inorder(struct article_node *root)
     article_inorder(root->right);
 }
 
-void article_inorder_list(struct article_node* root, char* list)
+int article_inorder_list(struct article_node* root, char* list, int* lengths, int i)
 {
     if (root == NULL)
-        return;
-    article_inorder_list(root->left, list);
+        return i;
+    i = article_inorder_list(root->left, list, lengths, i);
     strcat(list, root->article->id);
-    article_inorder_list(root->right, list);
+    lengths[i++] = strlen(root->article->id);
+    //printf("spa: %d",lengths[i-1]);
+    i = article_inorder_list(root->right, list, lengths, i);
 }
 
 //====================================== STOP TREE ===================================
