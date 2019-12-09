@@ -104,6 +104,33 @@ void find_offset(int rank, int num_nodes, MPI_File* file, int* chunk)
 //
 //     word_num++;
 
+// void read_citations(char** citations_array, char* file_name)
+// {
+//     FILE * fp;
+//     char * line = NULL;
+//     size_t len = 0;
+//     ssize_t read;
+//
+//     fp = fopen(file_name, "r");
+//
+//     if (fp == NULL){
+//         printf("Citations file not found\n");
+//         exit(EXIT_FAILURE);
+//     }
+//
+//     while ((read = getline(&line, &len, fp)) != -1 && ftell(fp)) {
+//
+//         int offset = 0;
+//         int i;
+//         for(i = 0; i < len; i++)
+//         {
+//             i
+//         }
+//     }
+//
+//     free(line);
+// }
+
 void read_stopwords(struct stop_node** root, char* stopwords_file_name)
 {
     FILE * fp;
@@ -144,7 +171,7 @@ int metadataInsertion(struct word_node** root, char* meta_file)
     //FILE* test = fopen("test_offset.txt", "r");
     int chunk[2];
     find_offset(rank, world_size, &mpi_words_file, chunk);
-    printf("node #%d start %d | end %d\n", rank, chunk[0], chunk[1]);
+    // printf("node #%d start %d | end %d\n", rank, chunk[0], chunk[1]);
 
     FILE * fp;
     char * line = NULL;

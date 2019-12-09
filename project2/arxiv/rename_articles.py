@@ -1,9 +1,9 @@
 
 in_file = "arxiv-citations.txt"
-index_file = "indexed-citations.dat"
-article_ids_file = "article_ids.dat"
-hits_scores_file = "hits_scores.dab"
-combined_file = "combined_file.dat"
+index_file = "indexed-citations.txt"
+article_ids_file = "article_ids.txt"
+hits_scores_file = "hits_scores.txt"
+combined_file = "combined_file.txt"#too big for git
 
 article_indexes = {}
 lookup_later = []
@@ -22,12 +22,12 @@ with open(in_file, 'r') as citations:
         elif not in_citations:
             article_indexes[line] = i
             i+=1
-            current_article = article_indexes[line]
+            current_article = line#article_indexes[line]
             citation_dict[current_article] = []
         elif in_citations:
             #print(f"citing {current_article}")
             try:
-                current_citation = article_indexes[line]
+                current_citation = line#article_indexes[line]
                 citation_dict[current_article].append(current_citation)#add the index of the citation to the list of citations for
             except KeyError:
                 lookup_later.append((current_article, line))
@@ -79,9 +79,9 @@ with open(article_ids_file, 'w+') as outf:
 with open(combined_file, 'w+') as outf:
     for article, id in zip(article_indexes.items(), citation_dict.items()):
         if len(id[1]) == 0:
-            new_line = (f"{id[0]}:{article[0]}:0\n")
+            new_line = (f"{article[0]}:0\n")
         else:
-            new_line = (f"{id[0]}:{article[0]}:{id[1]}\n")
+            new_line = (f"{article[0]}:{id[1]}\n")
         outf.write(new_line)
         #if new_line[-3] == '['
 #print(citation_dict)

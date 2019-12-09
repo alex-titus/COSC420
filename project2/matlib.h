@@ -20,7 +20,10 @@ void mat_init(Matrix* A, int r, int c, int max_rand){
 	int i,j;
 	for(i=0; i<r; i++)
 		for(j=0; j<c; j++)
-			ACCESS(A,i,j) = rand() % max_rand + 1;
+			if(max_rand == 0)
+				ACCESS(A,i,j) = 0.0;
+			else
+				ACCESS(A,i,j) = rand() % max_rand + 1;
 }
 
 void mat_print(Matrix* A){
@@ -414,4 +417,79 @@ int t_check(Matrix* A, Matrix* B, double tolerance){
 		if(fabs(ACCESS(A, i, 0) - ACCESS(B, i, 0)) < tolerance)
 			bool = 0;
 	return bool;
+}
+
+Matrix* pagerank(Matrix* M, int n, double tele_prob)
+{
+	MPI_Comm world = MPI_COMM_WORLD;
+	int rank, world_size;
+	MPI_Comm_rank(world, &rank);
+	//srand(time(0));
+	Matrix temp, x, e;
+	Matrix* D = malloc(sizeof(struct Matrix));
+	Matrix *d = malloc(sizeof(struct Matrix));
+	mat_init(D, n, n, 0);
+	mat_init(d, 1, n, 1);
+
+	mat_init(&x, n, 1, 1);
+	mat_init(&temp, n, 1, 0);
+
+	mat_init(&e, 1, n, 1);
+
+	mat_multiply(&e, M, d);
+
+	if(rank == 0){
+		printf("Vector d:\n");
+		mat_print(d);
+		printf("Matrix M :\n");
+		mat_print(M);
+	}
+
+	int i;
+	for(i = 0; i < n; i++)//diag + inverse
+		if(ACCESS(d, 0, i) != 0)
+			ACCESS(D, i, i) = 1/ ACCESS(d, 0, i);
+
+	if(rank == 0){
+		printf("Matrix D :\n");
+		mat_print(D);
+	}
+
+	Matrix T;
+	mat_init(&T, n, n, 1);
+	mat_multiply(M, D, &T);
+
+	if(rank == 0){
+		printf("Vector x:\n");
+		mat_print(&x);
+		printf("Matrix T:\n");
+		mat_print(&T);
+	}
+
+
+
+	int end = 0;
+	float tolerance = 0.001;
+	while(t_check(&x, &temp, tolerance)){
+		mat_multiply(&T, &x, &temp);
+		normalize(&temp);
+		mat_equals(&x, &temp);
+		if(rank == 0){
+			printf("Eigenvector:\n");
+			mat_print(&x);
+		}
+	}
+
+	mat_multiply(&T, &x, &temp);
+	// int eigval = norm2(&temp)/norm2(&x);
+	// if(rank == 0){
+	// 	printf("Eigenvalue: %f\n", eigval);
+	// }
+
+	free(T.arr);
+	free(x.arr);
+	free(temp.arr);
+
+	MPI_Finalize();
+	return 0;
 }
