@@ -190,7 +190,10 @@ void word_insert(struct word_node **root, struct word_node* z)
     //if root is null make z as root    free(article.abstract);
     if (*root == NULL)
     {
+<<<<<<< HEAD
         // printf("this should only happen once\n");
+=======
+>>>>>>> 99eb8b1c285bd68af84db24a8da59c097bee6ddc
         (*root) = malloc(sizeof(struct word_node));
         word_init_node((*root), z->word, z->sub_root->article);
         (*root)->color = 'B';
