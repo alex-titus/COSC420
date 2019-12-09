@@ -298,79 +298,83 @@ int main(int argc, char** argv)
         world
     );*/
 
-        if(strcmp(input, "-1") == 0)
-        {
-            done = 1;
-            continue;
+    if(strcmp(input, "-1") == 0)
+    {
+        done = 1;
+        continue;
+    }
+
+    int* num_articles = calloc(world_size, sizeof(int));
+    int* displs = calloc(world_size, sizeof(int));
+    //printf("Node #%d: Searching for %s\n",rank, input);
+    struct word_node* ret = word_search(input, cthulu_tree);
+
+    char *local_list;
+    int *local_lengths;
+    int *word_length;
+    int list_length;
+    if (ret == NULL){
+        local_list = NULL;
+        local_lengths = NULL;
+        word_length = NULL;
+        list_length = 0;
+    } else {
+        int i = 0;
+        local_list = malloc(500 * ret->sub_root->size * sizeof(char));
+        local_lengths = malloc(ret->sub_root->size * sizeof(int));
+        local_list[0] = '\0';
+        article_inorder_list(ret->sub_root, local_list, local_lengths, i);
+        list_length = strlen(local_list);
+    }
+
+    int search_return_value = check_search_return(ret);
+    //printf("srv = %d\n", search_return_value);
+    MPI_Gather(&search_return_value,
+        1,
+        MPI_INT,
+        num_articles,
+        1,
+        MPI_INT,
+        0,
+        world);
+
+        int article_count = 0;//= num_articles[0];
+        // displs[0] = 0;
+        int i;
+        for (i = 0; i < world_size; i++){
+            displs[i] = i;
+            //printf("adding %d to article count from rank %d\n", num_articles[i], rank);
+            article_count += num_articles[i];
         }
-
-        int* num_articles = calloc(world_size, sizeof(int));
-        int* displs = calloc(world_size, sizeof(int));
-        printf("Node #%d: Searching for %s\n",rank, input);
-        struct word_node* ret = word_search(input, cthulu_tree);
-
-        char *local_list;
-        int *local_lengths;
-        int *word_length;
-        int list_length;
-        if (ret == NULL){
-            local_list = NULL;
-            local_lengths = NULL;
-            word_length = NULL;
-            list_length = 0;
+        if(ret != NULL){
+            num_articles[rank] = ret->sub_root->size;
         } else {
-            int i = 0;
-            local_list = malloc(500 * ret->sub_root->size * sizeof(char));
-            local_lengths = malloc(ret->sub_root->size * sizeof(int));
-            local_list[0] = '\0';
-            article_inorder_list(ret->sub_root, local_list, local_lengths, i);
-            list_length = strlen(local_list);
+            num_articles[rank] = 0;
         }
 
-        int search_return_value = check_search_return(ret);
-        printf("srv = %d", search_return_value);
-        MPI_Gather(&search_return_value,
-            world_size,
-            MPI_INT,
-            num_articles,
-            world_size,
-            MPI_INT,
-            0,
-            world);
-
-            int article_count = 0;//= num_articles[0];
-            // displs[0] = 0;
-            int i;
-            for (i = 0; i < world_size; i++){
-                displs[i] = i;
-                article_count += num_articles[i];
-            }
-            // puts("test");
-            printf("rank num articles[%d]: %d\n",rank, num_articles[rank]);
-            // for(i = 0; i < num_articles[rank]; i++){
-            //     printf("sadness%d: %d\n",i,local_lengths[i]);
-            // }
+        // puts("test");
+        // for(i = 0; i < num_articles[rank]; i++){
+        //     printf("sadness%d: %d\n",i,local_lengths[i]);
+        // }
         int * id_lengths = malloc(article_count * sizeof(int));
-        if(rank==0){printf("b4GV\n");}
         MPI_Gatherv(local_lengths,
             num_articles[rank],
             MPI_INT,
             id_lengths,
-            &article_count,
+            num_articles,
             displs,
             MPI_INT,
             0,
             world
         );
+        MPI_Barrier(world);
         int* local_list_lengths = calloc(world_size,sizeof(int));
-        if(rank == 0){
-        if(rank==0){printf("afterGV\n");}
         int* num_articles_displs = malloc(world_size*sizeof(int));
         num_articles_displs[0] = num_articles[0];
         for(i = 1; i < world_size;i++){
             num_articles_displs[i] = num_articles_displs[i-1] + num_articles[i];
         }
-        if(rank == 0){printf("num_articles_displs - EArly: %d\n",num_articles_displs[0]);}
+        //if(rank == 0){printf("num_articles_displs - Early: %d\n",num_articles_displs[0]);}
 
         int j = 0, displs_add;
         for (i = 1; i < world_size; i++){
@@ -387,19 +391,13 @@ int main(int argc, char** argv)
                 local_list_lengths[i] += id_lengths[j];
             }
         }
-
+        local_list_lengths[rank] = list_length;
         //
-        printf("node %d's local list is %s\n", rank, local_list);
         if (rank == 0) {
             printf("There are a total of %d articles\n", article_count);
-            for(i = 0; i < world_size; i++){
-                printf("displs[%d]: %d\n",i,displs[i]);
-                printf("num_articles : %d\n",num_articles[i]);
-                printf("lll : %d\n",local_list_lengths[i]);
-            }
         }
-    }
-        char* list = calloc(50 * article_count, sizeof(char));
+        //printf("node %d's local list is %s\n", rank, local_list);
+        char* list = calloc(500 * article_count, sizeof(char));
 
         MPI_Gatherv(
             local_list,
